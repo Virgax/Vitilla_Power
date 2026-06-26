@@ -231,8 +231,10 @@ Ver el detalle en [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md):
 
 ## 11. Personajes
 
-Inspirado en *Mario Superstar Baseball*: un **roster de personajes** con estilo dominicano de
-barrio ("flow").
+Inspirado en *Mario Superstar Baseball* (ver [`MARIO_SUPERSTAR_BASEBALL.md`](MARIO_SUPERSTAR_BASEBALL.md)):
+un **roster de personajes 3D** con estilo dominicano de barrio ("flow"). Son **modelos 3D de
+personas** (no emojis ni sprites planos): cuerpo, jersey del cuadro, bermuda, chancletas y
+gorra, con bate; baten y pichean con animación.
 
 ### 11.1 Selección de personaje
 

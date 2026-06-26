@@ -8,11 +8,13 @@ de *timing*, usa *power-ups* y juega en esquinas y barrios reales de República 
 
 ## Estado del proyecto
 
-🚧 **Fase 1 — Prototipo.** Documentación de diseño lista y un **prototipo web jugable** del
-*core loop* de bateo (personaje → campo → bateo por *timing*).
+🚧 **Fase 1 — Prototipo.** Documentación de diseño lista y un **prototipo web 3D jugable** del
+*core loop* de bateo (personaje → campo → bateo por *timing*), con **personajes 3D** y soporte
+**portrait + landscape**.
 
 ▶️ **Probar el prototipo:** abre [`prototype/web/index.html`](prototype/web/index.html) en el
-navegador (móvil o escritorio). Ver [`prototype/web/README.md`](prototype/web/README.md).
+navegador (móvil o escritorio). Es un único archivo autocontenido. Ver
+[`prototype/web/README.md`](prototype/web/README.md).
 
 ## Documentación
 
@@ -20,6 +22,7 @@ navegador (móvil o escritorio). Ver [`prototype/web/README.md`](prototype/web/R
 |-----------|-------------|
 | [`docs/GDD.md`](docs/GDD.md) | Documento de Diseño del Juego (GDD) — visión, mecánicas, modos, personajes, campos. |
 | [`docs/VITILLA_RESEARCH.md`](docs/VITILLA_RESEARCH.md) | Investigación de la vitilla real (reglas, diana de strike, por qué "baila"). |
+| [`docs/MARIO_SUPERSTAR_BASEBALL.md`](docs/MARIO_SUPERSTAR_BASEBALL.md) | Referencia: cómo funciona *Mario Superstar Baseball* y cómo lo adaptamos. |
 | [`docs/TECH_STACK.md`](docs/TECH_STACK.md) | Análisis de tecnología cross-platform (iOS + Android) para el prototipo. |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Hoja de ruta y próximos pasos. |
 | [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) | Decisiones pendientes (balance, derechos de autor, monetización). |
