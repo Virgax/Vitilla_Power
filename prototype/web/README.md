@@ -20,6 +20,9 @@ funciona **sin internet** y sin servidor, en móvil o escritorio.
 - 🧍 **Personaje → 🏟️ Campo → ⚾ Juego 3D.** Los jugadores son **personajes 3D** (no emojis):
   cuerpo, jersey del cuadro, bermuda, chancletas y gorra del equipo, con bate. El bateador
   hace su **swing** y el pícher **lanza** con animación, al estilo *Mario Superstar Baseball*.
+- 🧢 **Vitilla = tapa real:** modelada como una **tapa/bitilla** (tope abombado + falda ancha
+  abajo, perfil revolucionado), con **colores variados** (amarillo, verde, azul, lila) como en
+  la realidad.
 - 🥏 **Física tipo frisbee:** la vitilla **planea** y **gira sobre su propio eje**
   (giroscópico), con una **curva que rompe y vuelve a cruzar el plato** y se **inclina (bank)**
   hacia donde curva — como un disco volador real. Al conectar, **sale planeando** con

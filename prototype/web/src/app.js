@@ -26,6 +26,9 @@ const FIELDS = [
 
 const state = { character: null, field: FIELDS[0] };
 
+// Colores reales de vitillas (como en la foto de referencia): amarillo, verde, azul, lila
+const VITILLA_COLORS = [0xe8c84b, 0x6fa84a, 0x4fa3d1, 0x6e7bc8, 0x2f7fc0];
+
 function show(id) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -213,19 +216,21 @@ const Game = (() => {
     mound.position.set(0, 0.15, -FIELD_LEN + 1);
     scene.add(mound);
 
-    // Vitilla (tapa tipo frisbee). capRig = actitud (bank/pitch); capMesh gira sobre su eje.
+    // Vitilla = TAPA real (tope abombado, ranura y falda más ancha abajo), revolucionando
+    // un perfil 2D (LatheGeometry). capRig = actitud (bank/pitch); capMesh gira sobre su eje.
     capRig = new THREE.Group();
+    const profile = [
+      [0.00, 0.00], [0.40, 0.00], [0.42, 0.045], [0.40, 0.085], [0.345, 0.105], // falda + ranura
+      [0.36, 0.125], [0.355, 0.30], [0.335, 0.36],                               // pared
+      [0.265, 0.42], [0.15, 0.45], [0.00, 0.46]                                  // hombro + tope abombado
+    ].map((p) => new THREE.Vector2(p[0], p[1]));
+    const capGeo = new THREE.LatheGeometry(profile, 36);
+    capGeo.translate(0, -0.23, 0);     // centrar verticalmente
+    capGeo.computeVertexNormals();
     capMesh = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.42, 0.42, 0.12, 24),
-      new THREE.MeshStandardMaterial({ color: 0x2a7bff, emissive: 0x0a2a66, metalness: 0.2, roughness: 0.45 })
+      capGeo,
+      new THREE.MeshStandardMaterial({ color: 0x4fa3d1, roughness: 0.55, metalness: 0.05 })
     );
-    // borde (rim) para que se lea como disco/tapa
-    const rim = new THREE.Mesh(
-      new THREE.TorusGeometry(0.4, 0.06, 8, 24),
-      new THREE.MeshStandardMaterial({ color: 0x1657c8, roughness: 0.5 })
-    );
-    rim.rotation.x = Math.PI / 2;
-    capMesh.add(rim);
     capRig.add(capMesh);
     capRig.visible = false;
     scene.add(capRig);
@@ -388,6 +393,7 @@ const Game = (() => {
     // amplitud de la curva: menos con power-up (más fácil de leer)
     cap.curveAmp = (powerUpActive ? 0.9 : 1.7) + Math.random() * 1.0;
     cap.flutter = (powerUpActive ? 0.05 : 0.12) + Math.random() * 0.06;
+    capMesh.material.color.setHex(VITILLA_COLORS[Math.floor(Math.random() * VITILLA_COLORS.length)]);
     capRig.visible = true;
     capShadow.visible = true;
     pitchT = 0;   // anima el brazo del pícher
