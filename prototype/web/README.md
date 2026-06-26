@@ -20,8 +20,10 @@ funciona **sin internet** y sin servidor, en móvil o escritorio.
 - 🧍 **Personaje → 🏟️ Campo → ⚾ Juego 3D.** Los jugadores son **personajes 3D** (no emojis):
   cuerpo, jersey del cuadro, bermuda, chancletas y gorra del equipo, con bate. El bateador
   hace su **swing** y el pícher **lanza** con animación, al estilo *Mario Superstar Baseball*.
-- 🌀 **Vitilla 3D flotadora/giratoria:** viene desde el pícher "bailando" (flota y gira),
-  como la vitilla real. Toca **BATEAR** cuando esté en el punto de contacto, cerca del home.
+- 🥏 **Física tipo frisbee:** la vitilla **planea** y **gira sobre su propio eje**
+  (giroscópico), con una **curva que rompe y vuelve a cruzar el plato** y se **inclina (bank)**
+  hacia donde curva — como un disco volador real. Al conectar, **sale planeando** con
+  sustentación hacia el jardín. Toca **BATEAR** cuando cruce el plato.
 - 🎯 Centro = **JONRÓN** (sale volando al outfield), cerca = **HIT**, borde = **foul**,
   fuera = **gilla**.
 - ⚡ **Power-up al 3er turno** (al llevar 2 gillas): ensancha la ventana de bateo.

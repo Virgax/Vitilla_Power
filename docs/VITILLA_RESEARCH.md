@@ -34,7 +34,12 @@ fildeo, por la coordinación que exige.
 > velocidad**, lo que hace el bateo y el fildeo **impredecibles**.
 
 Este es el corazón de la sensación del juego: la trayectoria no es recta, "baila" en el aire.
-El prototipo debe capturar ese movimiento ondulante/giratorio.
+
+> 🥏 **Modelo de física = frisbee / disco volador.** La vitilla se comporta como un disco:
+> **planea** (sustentación), **gira sobre su propio eje** (estabilización giroscópica) y
+> **curva/se inclina (bank)** según el giro y el viento. El prototipo 3D ya implementa esto:
+> curva que rompe y cruza el plato, inclinación hacia la curva, y batazos que salen
+> *planeando* en vez de caer como una pelota.
 
 ## Pícheo y bateo
 
