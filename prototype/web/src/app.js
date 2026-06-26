@@ -79,7 +79,7 @@ btnToField.addEventListener("click", () => show("screen-field"));
 
 /* ---------- Selección de campo ---------- */
 const fieldGrid = document.getElementById("field-grid");
-const btnToGame = document.getElementById("btn-to-game");
+const btnToMode = document.getElementById("btn-to-mode");
 function renderFields() {
   fieldGrid.innerHTML = "";
   FIELDS.forEach((f) => {
@@ -96,13 +96,18 @@ function renderFields() {
       state.field = f;
       document.querySelectorAll("#field-grid .card").forEach((el) => el.classList.remove("selected"));
       card.classList.add("selected");
-      btnToGame.disabled = false;
+      btnToMode.disabled = false;
     });
     fieldGrid.appendChild(card);
   });
 }
 document.getElementById("btn-back-character").addEventListener("click", () => show("screen-character"));
-document.getElementById("btn-to-game").addEventListener("click", () => { show("screen-game"); Game.start(); });
+btnToMode.addEventListener("click", () => show("screen-mode"));
+
+/* ---------- Selección de modo (vs CPU / 2 jugadores) ---------- */
+document.getElementById("btn-back-field").addEventListener("click", () => show("screen-field"));
+document.getElementById("mode-cpu").addEventListener("click", () => { show("screen-game"); Game.start("cpu"); });
+document.getElementById("mode-2p").addEventListener("click", () => { show("screen-game"); Game.start("2p"); });
 document.getElementById("btn-quit").addEventListener("click", () => { Game.stop(); show("screen-character"); });
 
 /* ============================================================
@@ -113,12 +118,16 @@ document.getElementById("btn-quit").addEventListener("click", () => { Game.stop(
 const Game = (() => {
   const canvas = document.getElementById("game-canvas");
   const msgEl = document.getElementById("message");
-  const btnSwing = document.getElementById("btn-swing");
+  const btnAction = document.getElementById("btn-action");
   const errEl = document.getElementById("webgl-error");
+  const roleBanner = document.getElementById("role-banner");
+  const pitchControls = document.getElementById("pitch-controls");
+  const chargeFill = document.getElementById("charge-fill");
+  const btnPitchPower = document.getElementById("btn-pitch-power");
 
-  const elRuns = document.getElementById("hud-runs");
+  const elScore = document.getElementById("hud-score");
+  const elInning = document.getElementById("hud-inning");
   const elOuts = document.getElementById("hud-outs");
-  const elGillas = document.getElementById("hud-gillas");
   const elPower = document.getElementById("hud-power");
   const elPowerVal = document.getElementById("hud-power-val");
 
@@ -126,20 +135,28 @@ const Game = (() => {
   const CAP_START_Z = -FIELD_LEN + 1;   // frente al pícher
   const CAP_END_Z = 3;                  // pasa el home
   const HIT_Z = 0;                       // punto ideal de contacto
-  const BASE_WIN = 1.5;                  // ventana (en unidades z)
-  const POWER_WIN_BONUS = 1.3;
-  const CAP_SPEED = 7.2;                 // unidades/seg (más lento que antes)
-  const SPEED_RAMP = 0.35;               // sube por conexión
-  const MAX_SPEED = 11;
+  const BASE_WIN = 1.25;                 // ventana (en unidades z)
+  const BAT_POWER_BONUS = 1.2;          // power-up del bateador: amplía la ventana
+  const PITCH_POWER_PENALTY = 0.7;      // power-up del pícher: reduce la ventana
+  const CAP_SPEED = 7.2;                 // unidades/seg base
+  const MIN_SPEED = 6.0, MAX_SPEED = 11.5;
+  const OUTS_PER_HALF = 3;
+  const INNINGS = 1;                     // entradas por partido (cada lado batea 1 vez)
+  const POWERS_PER_HALF = 2;            // usos de power-up por lado por media entrada
 
   let renderer, scene, camera, clock;
   let capMesh, capRig, capShadow, batter, pitcher;
   let swingT = -1, pitchT = -1;   // animaciones (-1 = inactiva)
   let raf = null, started = false;
 
-  let runs, gillas, powerUpActive, speed;
-  // estado de la vitilla: 'idle' | 'incoming' | 'hit' | 'done'
+  let speed;
+  // match = estado del duelo de 2 lados
+  let match = null;
+  // fase: 'intro' | 'pitchsetup' | 'incoming' | 'hit' | 'resolved' | 'over'
   let capState = "idle";
+  let charging = false, chargeVal = 0;   // carga de fuerza del pícheo (humano)
+  let cpuSwingZ = 99;                     // z al que la CPU decide abanicar (si batea)
+  let pitchPowered = false;              // el lanzamiento actual lleva power-up del pícher
   // Física tipo frisbee: posición + velocidad + actitud (bank/pitch) + giro giroscópico
   let cap = {
     x: 0, y: 1.5, z: 0,
@@ -263,9 +280,34 @@ const Game = (() => {
 
     window.addEventListener("resize", onResize);
     window.addEventListener("orientationchange", onResize);
-    btnSwing.addEventListener("click", swing);
-    canvas.addEventListener("pointerdown", (e) => { e.preventDefault(); swing(); });
-    document.addEventListener("keydown", (e) => { if (e.code === "Space") { e.preventDefault(); swing(); } });
+
+    // Botón de acción: BATEAR (tap) cuando bateas; LANZAR (mantener y soltar) cuando pícheas.
+    btnAction.addEventListener("pointerdown", (e) => { e.preventDefault(); onActionDown(); });
+    btnAction.addEventListener("pointerup", (e) => { e.preventDefault(); onActionUp(); });
+    btnAction.addEventListener("pointerleave", () => { if (charging) onActionUp(); });
+    // Tap en el campo = batear (solo cuando bateas tú)
+    canvas.addEventListener("pointerdown", (e) => { e.preventDefault(); if (capState === "incoming" && humanBatting()) doSwing(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space") { e.preventDefault(); if (capState === "incoming" && humanBatting()) doSwing(); }
+    });
+
+    // Curvas del pícheo
+    document.querySelectorAll(".curve-btn[data-curve]").forEach((b) => {
+      b.addEventListener("click", () => {
+        document.querySelectorAll(".curve-btn[data-curve]").forEach((x) => x.classList.remove("selected"));
+        b.classList.add("selected");
+        const c = b.getAttribute("data-curve");
+        match.pitch.curveSel = c;
+      });
+    });
+    // Power-up del pícher (armar/desarmar el próximo lanzamiento)
+    btnPitchPower.addEventListener("click", () => {
+      if (capState !== "pitchsetup") return;
+      const side = match.pitchingSide;
+      if (match.powerUses[side] <= 0 && !match.pitch.armed) return;
+      match.pitch.armed = !match.pitch.armed;
+      btnPitchPower.classList.toggle("armed", match.pitch.armed);
+    });
     return true;
   }
 
@@ -348,108 +390,270 @@ const Game = (() => {
     camera.updateProjectionMatrix();
   }
 
-  /* ---------- Flujo de juego ---------- */
-  function start() {
+  /* ---------- Flujo de duelo (pícher vs. bateador, 2 lados) ---------- */
+  let actionMode = "none"; // 'continue' | 'pitch' | 'bat' | 'restart' | 'none'
+
+  function sideName(s) {
+    if (!match) return "";
+    if (match.mode === "cpu") return s === 0 ? "Tú" : "CPU";
+    return "Jugador " + (s + 1);
+  }
+  function sideIsHuman(s) { return match.mode === "2p" ? true : s === 0; }
+  function humanBatting() { return sideIsHuman(match.battingSide); }
+  function setRole(html) { roleBanner.innerHTML = html; }
+  function setMessage(txt, color) { msgEl.textContent = txt; msgEl.style.color = color || "#fff"; }
+  function showPitchControls() { pitchControls.classList.remove("hidden"); }
+  function hidePitchControls() { pitchControls.classList.add("hidden"); charging = false; chargeFill.style.width = "0%"; }
+
+  function start(mode) {
     if (!init()) return;
     setBatterAppearance(state.character || {});
-    // color de cielo/grama según campo
     scene.background = new THREE.Color((state.field && state.field.sky) || 0x8ecbff);
     const ground = scene.getObjectByName("ground");
     if (ground) ground.material.color.setHex((state.field && state.field.grass) || 0x3f9f4a);
 
-    runs = 0; gillas = 0; speed = CAP_SPEED; powerUpActive = false;
+    match = {
+      mode: mode || "cpu",
+      inning: 1, half: 0,
+      battingSide: 0, pitchingSide: 1,
+      scores: [0, 0], outs: 0,
+      powerUses: [POWERS_PER_HALF, POWERS_PER_HALF],
+      pitch: { curveSel: "straight", armed: false }
+    };
+    speed = CAP_SPEED;
     capState = "idle";
-    btnSwing.disabled = false;
-    btnSwing.textContent = "¡BATEAR!";
-    updateHUD();
-    setMessage("¡Dale a la vitilla! 🥎", "#fff");
-    onResize();
+    pitchPowered = false;
     started = true;
+    onResize();
     if (!raf) loop();
-    setTimeout(nextPitch, 1000);
+    updateHUD();
+    beginHalf();
   }
   function stop() { started = false; if (raf) { cancelAnimationFrame(raf); raf = null; } }
 
-  function updateHUD() {
-    elRuns.textContent = runs;
-    elOuts.textContent = gillas;
-    elGillas.textContent = gillas;
-    elPowerVal.textContent = powerUpActive ? ((state.character && state.character.power) || "¡Listo!") : "—";
-    elPower.classList.toggle("active", powerUpActive);
+  function beginHalf() {
+    match.battingSide = match.half === 0 ? 0 : 1;
+    match.pitchingSide = 1 - match.battingSide;
+    match.outs = 0;
+    match.powerUses = [POWERS_PER_HALF, POWERS_PER_HALF];
+    capState = "intro";
+    hidePitchControls();
+    capRig.visible = false; capShadow.visible = false;
+    updateHUD();
+    const bn = sideName(match.battingSide), pn = sideName(match.pitchingSide);
+    setRole('<span class="bat">🏏 ' + bn + ' batea</span> &nbsp;·&nbsp; <span class="pit">🥏 ' + pn + ' pichea</span>');
+    setMessage("Entrada " + match.inning, "#fff");
+    btnAction.classList.remove("pitching");
+    btnAction.textContent = "Continuar ▶";
+    btnAction.disabled = false;
+    actionMode = "continue";
   }
-  function setMessage(txt, color) { msgEl.textContent = txt; msgEl.style.color = color || "#fff"; }
 
-  function nextPitch() {
+  function preparePitch() {
     if (!started) return;
-    if (gillas >= 3) return gameOver();
-    powerUpActive = gillas === 2;
+    capState = "pitchsetup";
+    match.pitch.armed = false;
+    btnPitchPower.classList.remove("armed");
     swung = false;
-    capState = "incoming";
-    cap.z = CAP_START_Z;
-    cap.x = 0; cap.prevX = 0;
-    cap.phase = Math.random() * Math.PI * 2;
-    cap.spinRate = 24 + Math.random() * 8;
-    cap.curveDir = Math.random() < 0.5 ? -1 : 1;
-    // amplitud de la curva: menos con power-up (más fácil de leer)
-    cap.curveAmp = (powerUpActive ? 0.9 : 1.7) + Math.random() * 1.0;
-    cap.flutter = (powerUpActive ? 0.05 : 0.12) + Math.random() * 0.06;
-    capMesh.material.color.setHex(VITILLA_COLORS[Math.floor(Math.random() * VITILLA_COLORS.length)]);
-    capRig.visible = true;
-    capShadow.visible = true;
-    pitchT = 0;   // anima el brazo del pícher
-    setMessage(powerUpActive ? ("⚡ ¡POWER-UP! " + state.character.power) : "", powerUpActive ? "#f5c542" : "#fff");
+    setMessage("", "#fff");
+    if (sideIsHuman(match.pitchingSide)) {
+      showPitchControls();
+      btnPitchPower.disabled = match.powerUses[match.pitchingSide] <= 0;
+      setRole('<span class="pit">🥏 ' + sideName(match.pitchingSide) + ': elige curva y MANTÉN para lanzar</span>');
+      btnAction.classList.add("pitching");
+      btnAction.textContent = "LANZAR";
+      btnAction.disabled = false;
+      actionMode = "pitch";
+    } else {
+      hidePitchControls();
+      setRole('<span class="pit">🥏 ' + sideName(match.pitchingSide) + ' prepara el pícheo…</span>');
+      btnAction.classList.remove("pitching");
+      btnAction.textContent = "Esperando…";
+      btnAction.disabled = true;
+      actionMode = "none";
+      const p = cpuChoosePitch();
+      setTimeout(() => { if (capState === "pitchsetup") throwPitch(p); }, 750);
+    }
     updateHUD();
   }
-  function currentWin() { return BASE_WIN + (powerUpActive ? POWER_WIN_BONUS : 0); }
 
-  function swing() {
+  function cpuChoosePitch() {
+    const usePower = match.powerUses[match.pitchingSide] > 0 && Math.random() < 0.4;
+    const amp = 1.2 + Math.random() * 1.5 + (usePower ? 1.0 : 0);
+    const spd = MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED) * 0.75;
+    return { curveDir: Math.random() < 0.5 ? -1 : 1, curveAmp: amp, speed: spd, powered: usePower };
+  }
+
+  function humanThrow() {
+    const sel = match.pitch.curveSel || "straight";
+    const dir = sel === "left" ? -1 : 1;
+    const amp = sel === "straight" ? (0.3 + Math.random() * 0.3) : (1.8 + Math.random() * 0.8);
+    const spd = MIN_SPEED + chargeVal * (MAX_SPEED - MIN_SPEED);
+    const powered = match.pitch.armed && match.powerUses[match.pitchingSide] > 0;
+    const wild = chargeVal > 0.92 ? Math.abs(Math.random() - 0.5) * 1.2 : 0;  // sobrecarga = salvaje
+    throwPitch({ curveDir: dir, curveAmp: amp + wild + (powered ? 1.0 : 0), speed: spd, powered: powered });
+  }
+
+  function throwPitch(p) {
+    hidePitchControls();
+    if (p.powered) match.powerUses[match.pitchingSide] = Math.max(0, match.powerUses[match.pitchingSide] - 1);
+    pitchPowered = !!p.powered;
+    speed = THREE.MathUtils.clamp(p.speed, MIN_SPEED, MAX_SPEED);
+    capState = "incoming";
+    swung = false;
+    cap.z = CAP_START_Z; cap.x = 0; cap.prevX = 0;
+    cap.phase = Math.random() * Math.PI * 2;
+    cap.spinRate = 24 + Math.random() * 8;
+    cap.curveDir = p.curveDir;
+    cap.curveAmp = p.curveAmp;
+    cap.flutter = (pitchPowered ? 0.16 : 0.1) + Math.random() * 0.05;
+    capMesh.material.color.setHex(pitchPowered ? 0xff5a2a : VITILLA_COLORS[Math.floor(Math.random() * VITILLA_COLORS.length)]);
+    capMesh.material.emissive.setHex(pitchPowered ? 0x7a1500 : 0x000000);
+    capRig.visible = true; capShadow.visible = true;
+    pitchT = 0;
+
+    const bn = sideName(match.battingSide);
+    setRole('<span class="bat">🏏 ¡Batea ' + bn + '!</span>' + (pitchPowered ? ' &nbsp;<span class="pit">⚡ pícheo con poder</span>' : ''));
+    if (sideIsHuman(match.battingSide)) {
+      btnAction.classList.remove("pitching");
+      btnAction.textContent = "¡BATEAR!";
+      btnAction.disabled = false;
+      actionMode = "bat";
+    } else {
+      btnAction.classList.remove("pitching");
+      btnAction.textContent = "CPU batea…";
+      btnAction.disabled = true;
+      actionMode = "none";
+      cpuSwingZ = cpuPlanSwing();
+    }
+    updateHUD();
+  }
+
+  function cpuPlanSwing() {
+    if (Math.random() < 0.12) return 99;  // a veces la deja pasar (gilla)
+    const diff = 0.5 + cap.curveAmp * 0.12 + (speed - MIN_SPEED) * 0.06 + (pitchPowered ? 0.5 : 0);
+    return (Math.random() - 0.5) * 2 * diff;
+  }
+
+  // El bateador tiene power-up disponible en el 3er turno (al llegar a 2 outs), como en la reunión
+  function batterPower() {
+    return match.outs === OUTS_PER_HALF - 1 && match.powerUses[match.battingSide] > 0;
+  }
+  function currentWin() {
+    let w = BASE_WIN;
+    if (batterPower()) w += BAT_POWER_BONUS;
+    if (pitchPowered) w -= PITCH_POWER_PENALTY;
+    return Math.max(0.7, w);
+  }
+
+  function doSwing() {
     if (capState !== "incoming" || swung) return;
     swung = true;
     swingT = 0;   // anima el swing del bateador
+    const usedBatPower = batterPower();
+    if (usedBatPower) match.powerUses[match.battingSide] = Math.max(0, match.powerUses[match.battingSide] - 1);
     const d = Math.abs(cap.z - HIT_Z);
     const win = currentWin();
-    if (d <= win * 0.33) launchHit("¡JONRÓN! 💥", "#f5c542", 2, 16);
-    else if (d <= win * 0.75) launchHit("¡HIT! ⚾", "#2ecc71", 1, 10);
-    else if (d <= win) { setMessage("Foul… 😬", "#ffd27f"); endBall(false, 800); }
-    else gilla("¡GILLA! 🚫 Abanicaste");
+    if (d <= win * 0.33) onHit("¡JONRÓN! 💥", "#f5c542", 2, 16);
+    else if (d <= win * 0.75) onHit("¡HIT! ⚾", "#2ecc71", 1, 10);
+    else if (d <= win) { setMessage("Foul… 😬", "#ffd27f"); afterBall(800); }
+    else onOut("¡GILLA! 🚫 Abanicó");
   }
 
-  function launchHit(txt, color, addRuns, power) {
-    runs += addRuns;
-    speed = Math.min(speed + SPEED_RAMP, MAX_SPEED);
-    powerUpActive = false;
+  function onHit(txt, color, addRuns, power) {
+    match.scores[match.battingSide] += addRuns;
+    pitchPowered = false;
     capState = "hit";
-    // arranca desde donde estaba la vitilla y sale planeando hacia el outfield
     cap.x = capRig.position.x; cap.y = capRig.position.y; cap.z = capRig.position.z;
     cap.prevX = cap.x;
     cap.curveDir = Math.random() < 0.5 ? -1 : 1;
-    cap.vz = -power;                                   // hacia el jardín
-    cap.vx = cap.curveDir * (2 + Math.random() * 3);   // curva del batazo
-    cap.vy = power * 0.55;                              // elevación inicial
+    cap.vz = -power; cap.vx = cap.curveDir * (2 + Math.random() * 3); cap.vy = power * 0.55;
     cap.spinRate = 30;
-    setMessage(txt, color);
+    setMessage(txt + "  +" + addRuns, color);
     updateHUD();
-    endBall(true, 1300);
+    afterBall(1300);
   }
-  function gilla(txt) {
-    gillas += 1; powerUpActive = false; capState = "done";
+  function onOut(txt) {
+    match.outs += 1;
+    pitchPowered = false;
+    capState = "resolved";
     capRig.visible = false; capShadow.visible = false;
-    setMessage(txt, "#e23b3b");
+    setMessage(txt + "  (out " + match.outs + "/" + OUTS_PER_HALF + ")", "#e23b3b");
     updateHUD();
-    if (gillas >= 3) setTimeout(gameOver, 900); else setTimeout(nextPitch, 1000);
+    if (match.outs >= OUTS_PER_HALF) setTimeout(endHalf, 1100);
+    else setTimeout(preparePitch, 1100);
   }
-  function endBall(wasHit, delay) {
-    if (!wasHit) { capState = "done"; capRig.visible = false; capShadow.visible = false; }
-    setTimeout(() => { if (capState !== "incoming") nextPitch(); }, delay);
+  function afterBall(delay) {
+    if (capState !== "hit") { capState = "resolved"; capRig.visible = false; capShadow.visible = false; }
+    setTimeout(() => {
+      if (!started) return;
+      if (match.outs >= OUTS_PER_HALF) endHalf();
+      else preparePitch();
+    }, delay);
   }
 
-  function gameOver() {
-    capState = "done"; capRig.visible = false; capShadow.visible = false;
-    btnSwing.disabled = false;
-    setMessage("⚾ ¡FUERA! Carreras: " + runs, "#fff");
-    btnSwing.textContent = "JUGAR OTRA VEZ";
-    const restart = () => { btnSwing.removeEventListener("click", restart); start(); };
-    btnSwing.addEventListener("click", restart, { once: true });
+  function endHalf() {
+    hidePitchControls();
+    match.half += 1;
+    if (match.half >= 2) {
+      match.half = 0;
+      match.inning += 1;
+      if (match.inning > INNINGS) return endMatch();
+    }
+    beginHalf();
+  }
+
+  function endMatch() {
+    capState = "over";
+    capRig.visible = false; capShadow.visible = false;
+    hidePitchControls();
+    const s = match.scores;
+    let txt;
+    if (s[0] === s[1]) txt = "🤝 ¡Empate! " + s[0] + "–" + s[1];
+    else {
+      const w = s[0] > s[1] ? 0 : 1;
+      txt = "🏆 ¡Gana " + sideName(w) + "! " + Math.max(s[0], s[1]) + "–" + Math.min(s[0], s[1]);
+    }
+    setRole("");
+    setMessage(txt, "#fff");
+    btnAction.classList.remove("pitching");
+    btnAction.disabled = false;
+    btnAction.textContent = "JUGAR OTRA VEZ";
+    actionMode = "restart";
+  }
+
+  function updateHUD() {
+    if (!match) return;
+    elScore.textContent = match.scores[0] + "–" + match.scores[1];
+    elInning.textContent = match.inning + "/" + INNINGS;
+    elOuts.textContent = match.outs + "/" + OUTS_PER_HALF;
+    let pv = "—", active = false;
+    if (capState === "pitchsetup" && sideIsHuman(match.pitchingSide)) {
+      pv = "Pícher ×" + match.powerUses[match.pitchingSide]; active = match.pitch.armed;
+    } else if (capState === "incoming" && batterPower() && sideIsHuman(match.battingSide)) {
+      pv = (state.character && state.character.power) || "¡Listo!"; active = true;
+    } else if (pitchPowered) {
+      pv = "⚡ Pícher"; active = true;
+    } else {
+      pv = "Bat ×" + match.powerUses[match.battingSide];
+    }
+    elPowerVal.textContent = pv;
+    elPower.classList.toggle("active", active);
+  }
+
+  /* ---------- Botón de acción (según el rol) ---------- */
+  function onActionDown() {
+    if (actionMode === "pitch" && capState === "pitchsetup") { charging = true; chargeVal = 0; }
+    else if (actionMode === "bat") { doSwing(); }
+  }
+  function onActionUp() {
+    if (actionMode === "pitch" && charging) {
+      charging = false; btnAction.disabled = true; actionMode = "none"; humanThrow();
+    } else if (actionMode === "continue") {
+      actionMode = "none"; btnAction.disabled = true; preparePitch();
+    } else if (actionMode === "restart") {
+      actionMode = "none"; start(match.mode);
+    }
   }
 
   /* Coloca y orienta el disco como un frisbee: gira sobre su eje, se inclina (bank)
@@ -488,7 +692,9 @@ const Game = (() => {
       // planeo de frisbee: sube un poco y cae suave hacia el plato
       cap.y = 1.55 + Math.sin(sc * Math.PI) * 0.5 - sc * 0.5;
       applyDiscTransform(dt);
-      if (cap.z >= CAP_END_Z && !swung) gilla("¡GILLA! 🚫 La dejaste pasar");
+      // La CPU (cuando batea) decide su swing al cruzar su z objetivo
+      if (!swung && !sideIsHuman(match.battingSide) && cap.z >= cpuSwingZ) doSwing();
+      if (cap.z >= CAP_END_Z && !swung) onOut("¡GILLA! 🚫 La dejó pasar");
     } else if (capState === "hit") {
       cap.prevX = cap.x;
       const speedH = Math.hypot(cap.vx, cap.vz);
@@ -517,11 +723,20 @@ const Game = (() => {
       else pitcher.throwArm.rotation.x = -Math.sin(pitchT * Math.PI) * 2.2;
     }
 
+    // Carga de fuerza del pícheo (humano manteniendo LANZAR)
+    if (charging) {
+      chargeVal = Math.min(1, chargeVal + dt * 1.1);
+      chargeFill.style.width = (chargeVal * 100).toFixed(0) + "%";
+    }
+
     renderer.render(scene, camera);
   }
 
   return { start: start, stop: stop,
-           _debug: { capZ: () => cap.z, st: () => capState } };
+           _debug: {
+             capZ: () => cap.z, st: () => capState, action: () => actionMode,
+             match: () => match, swung: () => swung
+           } };
 })();
 
 /* ---------- Init ---------- */

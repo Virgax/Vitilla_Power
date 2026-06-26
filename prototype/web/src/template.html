@@ -36,7 +36,30 @@
       <div id="field-grid" class="grid"></div>
       <div class="actions">
         <button id="btn-back-character" class="btn ghost">← Atrás</button>
-        <button id="btn-to-game" class="btn primary" disabled>¡Jugar! ⚾</button>
+        <button id="btn-to-mode" class="btn primary" disabled>Continuar →</button>
+      </div>
+    </section>
+
+    <!-- PANTALLA: MODO -->
+    <section id="screen-mode" class="screen select">
+      <header class="topbar">
+        <h1>Modo de juego</h1>
+        <p class="tagline">Duelo de pícher vs. bateador</p>
+      </header>
+      <div id="mode-grid" class="grid">
+        <div class="card" id="mode-cpu">
+          <span class="emoji">🤖</span>
+          <div class="name">vs Máquina</div>
+          <div class="desc">Pelea contra la CPU. Tú pícheas y bateas.</div>
+        </div>
+        <div class="card" id="mode-2p">
+          <span class="emoji">🧑‍🤝‍🧑</span>
+          <div class="name">2 Jugadores</div>
+          <div class="desc">Por turnos en el mismo dispositivo.</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="btn-back-field" class="btn ghost">← Atrás</button>
       </div>
     </section>
 
@@ -44,14 +67,27 @@
     <section id="screen-game" class="screen">
       <canvas id="game-canvas"></canvas>
       <div id="hud">
-        <div class="hud-item"><span class="hud-label">Carreras</span><span id="hud-runs">0</span></div>
+        <div class="hud-item"><span class="hud-label">Marcador</span><span id="hud-score">0–0</span></div>
+        <div class="hud-item"><span class="hud-label">Entrada</span><span id="hud-inning">1</span></div>
         <div class="hud-item"><span class="hud-label">Outs</span><span id="hud-outs">0</span></div>
-        <div class="hud-item"><span class="hud-label">Gillas</span><span id="hud-gillas">0</span></div>
         <div class="hud-item power" id="hud-power"><span class="hud-label">Power-up</span><span id="hud-power-val">—</span></div>
       </div>
+      <div id="role-banner"></div>
       <div id="message"></div>
       <button id="btn-quit">Salir</button>
-      <button id="btn-swing">¡BATEAR!</button>
+
+      <!-- Controles de pícheo (solo cuando un humano pichea) -->
+      <div id="pitch-controls" class="hidden">
+        <div id="curve-row">
+          <button class="curve-btn" data-curve="left">⟲ Izq</button>
+          <button class="curve-btn selected" data-curve="straight">⟶ Recta</button>
+          <button class="curve-btn" data-curve="right">Der ⟳</button>
+          <button id="btn-pitch-power" class="curve-btn power">⚡ Poder</button>
+        </div>
+        <div id="charge-wrap"><div id="charge-fill"></div></div>
+      </div>
+
+      <button id="btn-action">¡BATEAR!</button>
       <div id="webgl-error"></div>
     </section>
 

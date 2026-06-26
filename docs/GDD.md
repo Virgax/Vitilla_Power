@@ -120,11 +120,31 @@ Inspirados en *Mario Superstar Baseball*. Hay poderes de **pícher** y de **bate
 - ⚠️ Lista completa de poderes del bateador y su contrapartida a cada poder del pícher →
   por definir.
 
+### 4.5 Implementado en el prototipo (ambos lados tienen poderes)
+
+- **Pícher:** al armar su poder, el lanzamiento **reduce la ventana de bateo** del rival y
+  **curva más** (vitilla "encendida"). Usos limitados por media entrada.
+- **Bateador:** en el 3er turno (al llegar a 2 outs) **amplía su ventana** de bateo.
+- Así el duelo se equilibra: el pícher presiona, el bateador responde.
+
 ---
 
 ## 5. Modos de juego
 
-Hay **dos modos principales**:
+### 5.0 Oponente: vs CPU o 2 jugadores (implementado)
+
+El juego es un **duelo de dos lados**: un lado **pichea** mientras el otro **batea**, y luego
+cambian. Se puede jugar:
+
+- **vs Máquina (CPU):** la IA pichea y batea contra el jugador.
+- **2 Jugadores:** por turnos en el mismo dispositivo (hot-seat).
+
+Estructura del prototipo: cada lado batea una media entrada (hasta 3 outs/gillas); gana quien
+anote más carreras. ⚠️ El corrido de bases y las entradas múltiples quedan para después.
+
+---
+
+Hay **dos modos principales** (de reglas de juego):
 
 ### 5.1 Sin bases ("normal, como en la calle")
 

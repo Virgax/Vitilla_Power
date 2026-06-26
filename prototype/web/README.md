@@ -11,15 +11,33 @@ funciona **sin internet** y sin servidor, en móvil o escritorio.
 
 > Gira el teléfono: el juego se adapta tanto vertical como horizontalmente.
 
+## Modos
+
+- 🤖 **vs Máquina (CPU):** pícheas y bateas contra la IA.
+- 🧑‍🤝‍🧑 **2 Jugadores:** por turnos en el mismo dispositivo (hot-seat).
+
 ## Controles
 
-- **¡BATEAR!** (botón), tocar la pantalla, o tecla **Espacio** para batear.
+**Cuando BATEAS:** **¡BATEAR!** (botón), tocar la pantalla, o **Espacio** — en el momento en
+que la vitilla cruza el plato.
+
+**Cuando PÍCHEAS:**
+- Elige la **curva**: ⟲ Izq / ⟶ Recta / Der ⟳.
+- (Opcional) arma **⚡ Poder** del pícher.
+- **Mantén LANZAR** para cargar la **fuerza** (más carga = más rápido; si te pasas, sale
+  salvaje) y **suelta** para lanzar.
 
 ## Mecánica
 
-- 🧍 **Personaje → 🏟️ Campo → ⚾ Juego 3D.** Los jugadores son **personajes 3D** (no emojis):
-  cuerpo, jersey del cuadro, bermuda, chancletas y gorra del equipo, con bate. El bateador
-  hace su **swing** y el pícher **lanza** con animación, al estilo *Mario Superstar Baseball*.
+- 🧍 **Personaje → 🏟️ Campo → 🎮 Modo → ⚾ Duelo 3D.** Los jugadores son **personajes 3D**
+  (cuerpo, jersey, bermuda, chancletas, gorra, bate). El bateador hace su **swing** y el pícher
+  **lanza** con animación, al estilo *Mario Superstar Baseball*.
+- ⚔️ **Duelo por turnos:** un lado **batea** (hasta 3 outs/gillas) mientras el otro **pichea**;
+  luego cambian. Gana quien anote más **carreras**.
+- ⚡ **Power-ups de ambos lados:**
+  - **Bateador:** en el 3er turno (al llegar a 2 outs) se **amplía la ventana** de bateo.
+  - **Pícher:** al armar su poder, el lanzamiento **reduce la ventana** del bateador y curva
+    más (vitilla "encendida").
 - 🧢 **Vitilla = tapa real:** modelada como una **tapa/bitilla** (tope abombado + falda ancha
   abajo, perfil revolucionado), con **colores variados** (amarillo, verde, azul, lila) como en
   la realidad.
