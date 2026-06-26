@@ -128,8 +128,13 @@ Hay **dos modos principales**:
 
 ### 5.1 Sin bases ("normal, como en la calle")
 
-- Juego callejero clásico: solo **tres bases** / dinámica simple de esquina.
+- Juego callejero clásico: dinámica simple de esquina.
 - Foco en el duelo pícher–bateador y el *out* por recogida.
+
+> 📌 **Nota de autenticidad** (ver [`VITILLA_RESEARCH.md`](VITILLA_RESEARCH.md)): la vitilla
+> real se juega con **home + 2 bases (1ª y 3ª), sin segunda base**, y usa una **diana de
+> strike** detrás del bateador. En la reunión se mapeó A=1ª/B=2ª/Y=3ª al estilo *Mario*.
+> ⚠️ Decisión pendiente: ser fieles (2 bases) en el modo auténtico vs. usar 3 por jugabilidad.
 
 ### 5.2 Con bases
 
@@ -224,7 +229,42 @@ Ver el detalle en [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md):
 
 ---
 
-## 10. Glosario
+## 11. Personajes
+
+Inspirado en *Mario Superstar Baseball*: un **roster de personajes** con estilo dominicano de
+barrio ("flow").
+
+### 11.1 Selección de personaje
+
+- **Selección manual** de un personaje del roster, o **aleatoria (random)** para partida
+  rápida.
+- Cada jugador tiene su **personaje principal** con su propio *flow* (estética y, a futuro,
+  estadísticas/poder característicos).
+
+### 11.2 Crea tu propio personaje
+
+- El jugador puede **crear su propio personaje** (no solo elegir del roster).
+- ✨ **Feature estrella (a futuro): avatar por *selfie*.** Tomas una foto y el sistema genera
+  tu personaje a partir de tu cara. Es una característica diferenciadora muy fuerte.
+  - Implicaciones técnicas a evaluar: detección/recorte facial, estilización (cartoon/avatar),
+    privacidad y permisos de cámara, procesamiento en dispositivo vs. servidor.
+  - ⚠️ Se trata como **fase posterior** (no MVP); en el prototipo se deja como *placeholder*.
+- Personalización adicional: piel, peinado, vestimenta (chancleta, bermuda, jersey del cuadro),
+  y el **palo** (que lleva el poder, ver §4.2).
+
+## 12. Selección de campo / escenario
+
+Antes de jugar, el jugador **elige el campo** ("select the playing field").
+
+- Se quieren **varias opciones**, que se irán mejorando con el tiempo.
+- **Por ahora un estadio de béisbol (*baseball stadium*) sirve** como campo base del prototipo.
+- A futuro, los escenarios de **esquinas/barrios reales de RD** (Cristo Rey, Los Ríos, San
+  Carlos, Palomino…) con su ambientación (colmado, gradas con gente bebiendo) — ver §6.3.
+
+> Flujo de entrada a partida (prototipo): **Seleccionar personaje → Seleccionar campo →
+> Jugar (duelo de bateo por *timing*)**.
+
+## 13. Glosario
 
 | Término | Significado |
 |---------|-------------|

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0b3d2e" />
+  <title>Vitilla Power — Prototipo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- PANTALLA: SELECCIÓN DE PERSONAJE -->
+    <section id="screen-character" class="screen active">
+      <header class="topbar">
+        <h1>VITILLA <span>POWER</span></h1>
+        <p class="tagline">Selecciona tu personaje</p>
+      </header>
+      <div id="character-grid" class="grid"></div>
+      <div class="actions">
+        <button id="btn-random" class="btn ghost">🎲 Aleatorio</button>
+        <button id="btn-to-field" class="btn primary" disabled>Continuar →</button>
+      </div>
+    </section>
+
+    <!-- PANTALLA: SELECCIÓN DE CAMPO -->
+    <section id="screen-field" class="screen">
+      <header class="topbar">
+        <h1>Selecciona el campo</h1>
+        <p class="tagline">Más escenarios en camino…</p>
+      </header>
+      <div id="field-grid" class="grid"></div>
+      <div class="actions">
+        <button id="btn-back-character" class="btn ghost">← Atrás</button>
+        <button id="btn-to-game" class="btn primary" disabled>¡Jugar! ⚾</button>
+      </div>
+    </section>
+
+    <!-- PANTALLA: JUEGO -->
+    <section id="screen-game" class="screen">
+      <div id="hud">
+        <div class="hud-item"><span class="hud-label">Carreras</span><span id="hud-runs">0</span></div>
+        <div class="hud-item"><span class="hud-label">Outs</span><span id="hud-outs">0</span></div>
+        <div class="hud-item"><span class="hud-label">Gillas</span><span id="hud-gillas">0</span></div>
+        <div class="hud-item power" id="hud-power"><span class="hud-label">Power-up</span><span id="hud-power-val">—</span></div>
+      </div>
+      <canvas id="game-canvas"></canvas>
+      <div id="message" class="message"></div>
+      <div class="game-controls">
+        <button id="btn-swing" class="btn swing">¡BATEAR!</button>
+      </div>
+      <button id="btn-quit" class="btn ghost small">Salir</button>
+    </section>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

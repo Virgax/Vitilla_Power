@@ -8,14 +8,18 @@ de *timing*, usa *power-ups* y juega en esquinas y barrios reales de República 
 
 ## Estado del proyecto
 
-🚧 **Fase 0 — Concepto y diseño.** El repositorio arranca con el Documento de Diseño del
-Juego (GDD). El prototipo jugable es el siguiente paso.
+🚧 **Fase 1 — Prototipo.** Documentación de diseño lista y un **prototipo web jugable** del
+*core loop* de bateo (personaje → campo → bateo por *timing*).
+
+▶️ **Probar el prototipo:** abre [`prototype/web/index.html`](prototype/web/index.html) en el
+navegador (móvil o escritorio). Ver [`prototype/web/README.md`](prototype/web/README.md).
 
 ## Documentación
 
 | Documento | Descripción |
 |-----------|-------------|
-| [`docs/GDD.md`](docs/GDD.md) | Documento de Diseño del Juego (GDD) — visión completa, mecánicas, modos, personalización. |
+| [`docs/GDD.md`](docs/GDD.md) | Documento de Diseño del Juego (GDD) — visión, mecánicas, modos, personajes, campos. |
+| [`docs/VITILLA_RESEARCH.md`](docs/VITILLA_RESEARCH.md) | Investigación de la vitilla real (reglas, diana de strike, por qué "baila"). |
 | [`docs/TECH_STACK.md`](docs/TECH_STACK.md) | Análisis de tecnología cross-platform (iOS + Android) para el prototipo. |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Hoja de ruta y próximos pasos. |
 | [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) | Decisiones pendientes (balance, derechos de autor, monetización). |
