@@ -1,0 +1,45 @@
+06-26 Reunión: Desarrollo de un Juego Móvil de Vitilla
+
+## Información de la Reunión
+> Fecha: 26 de junio de 2026, 10:03:27
+> Lugar: [Insertar Lugar]
+> Participantes: [Speaker 1] [Speaker 2] [Speaker 3]
+## Notas de la Reunión
+### Desarrollo de un Juego Móvil de Vitilla
+- **Descripción**
+  - Crear un juego de vitilla virtual para dispositivos móviles (Android y Apple).
+  - Los jugadores podrán elegir el tipo de palo y de vitilla.
+  - Necesidad de reglas claras, alineadas con el juego callejero.
+- **Conclusión**
+  - Concepto inicial definido: "Proyecto, prototipo, juegos de vitilla para dispositivos móviles".
+### Mecánicas y Poderes Especiales ("Power-ups")
+- **Descripción**
+  - Incluir "power-ups" inspirados en *Mario Superstar Baseball*.
+  - Un poder podría activarse en el tercer turno si el jugador falló los dos anteriores ("tiene dos gillas").
+  - Poderes del pitcher que afecten la jugabilidad del bateador, como dividir el rango de bateo.
+  - Sugerencias: vitillas flotadoras, que se congelan o se aplanan al tocar el piso.
+  - Mecánica de "timing" con barra de acción para bateo y recogida de la vitilla.
+### Modos de Juego y Reglas
+- **Descripción**
+  - Reglas básicas: cómo hacer "out" o ponchar.
+  - Regla: si se aplasta la vitilla en el suelo es "safe".
+  - Dos modos principales: con bases y sin bases.
+  - Para el modo con bases, adaptar la mecánica de *Mario Superstar Baseball* para controlar el envío de la vitilla a las bases.
+### Personalización y Ambientación
+- **Descripción**
+  - **Palos:** Personalización de "skins" con banderas de países y modelos de escobas o palas.
+  - **Ubicaciones:** Escenarios basados en barrios y esquinas reales de República Dominicana (Cristo Rey, Los Ríos, San Carlos).
+  - **Uniformes:** Vestimenta casual: chancletas, bermudas y camisetas de equipo.
+  - **Sonido:** Frases célebres y sonidos ambientales de los barrios para autenticidad.
+## Próximos Arreglos
+- [ ] Analizar un juego de pelota existente para estudiar mecánicas de picheo y bateo.
+- [ ] Definir las mecánicas exactas de bateo (combinaciones de teclas, sistemas de "timing").
+- [ ] Seleccionar las ubicaciones específicas (esquinas y barrios) a incluir.
+- [ ] Recopilar frases célebres y sonidos de ambiente, considerando derechos de autor.
+- [ ] Adaptar la mecánica de *Mario Superstar Baseball* para el modo "con bases".
+## Sugerencias de la IA
+> **Sugerencias de la IA**
+> La IA ha identificado los siguientes problemas sin conclusión o sin acciones claras:
+> 1. No se definió cómo funcionará la interacción entre los poderes del pitcher y las habilidades del bateador para mantener el equilibrio.
+> 2. No se estableció un plan concreto para gestionar los derechos de autor de las "frases célebres".
+> 3. No se discutió el modelo de monetización (gratuito, de pago, compras dentro de la app, etc.).

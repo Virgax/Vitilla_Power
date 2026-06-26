@@ -1,0 +1,146 @@
+00:00:00 Speaker 1
+Tus ideas.
+00:00:03 Speaker 2
+Proyecto, prototipo, juegos de vitilla para dispositivos móviles. Jaime Irving Edición 1.
+00:00:16 Speaker 2
+La idea es crear de manera virtual un juegos móvil para Android y para Apple. De vitilla, donde el jugador pueda tener la facilidad, De elegir el tipo de palo que va a utilizar y el tipo de vitilla que va a utilizar para pitchear.
+00:00:39 Speaker 1
+Hay que ponerle las reglas, porque el punto de los juegos, es como funciona. Si vamos a poner poderes, que poderes vamos a poner? No van a tener. Porque no podemos hacer flow, como el bateador. Como el bateador.
+00:00:54 Speaker 3
+Como Super Mario Slugger,
+00:00:55 Speaker 1
+Algo así que era de. Te tiran una vitilla flotadora, unas que van haciendo así como para arriba y para abajo, que freezan. El bateador te le pueda dar aire de que tope el piso, se ponga flaw, o sea, se quede plana para contarle la carrera Lo hacemos con las tres bases nada más, o sea normal como en la calle.
+00:01:17 Speaker 3
+Podemos ponerle flow al bateador, flow billbow Cuando tiene dos gillas, el tercer turno, Tú tienes un power up.
+00:01:25 Speaker 2
+Qué hizo un power? Ahí es Que.
+00:01:27 Speaker 1
+Se activa el poder ¿Y cómo lo podemos? Cómo hacemos el tema del bateado? Hay que buscar. Los palos tienen que ser obligados Sí, pero el flow en la pintura o el skin del palo Sí, el skin del palo Sí, tiene el power pero el de Dios Tiene el power pero el de Dios exacto Y ahí le pedimos cómo van a entrar los powers Los primeros dos hijos, los primeros donde traje tienen que ser tuyos, En el tercero tu puedo usar tu power up Funciona, verdad?
+00:01:59 Speaker 1
+Exacto, tiene que haber una manera de tu poder decir como Porque ok, yo te voy a pichear con unos poderes y tu me tienes que batear Cómo podemos hacer eso?
+00:02:19 Speaker 1
+Hay que buscar un juegos ya que sea como de pelota para ver cómo lo hacen, Porque si yo te picheo, o sea tú ves que es lo que es mi papá, de tu lado de tu pantalla tú ves tú le vas a dar la combinación que sea que tú quieras hacer del otro lado yo espero la y le doy y ya debe de funcionar, está bien, vamos a confiar, vamos a confiar que se pueda así, los skin de los palos, bandera de todos los países eso es lo.
+00:02:43 Speaker 3
+Primero los.
+00:02:45 Speaker 2
+Palos van a hacer tú vas a tener modelo de, El diablo, el palo.
+00:02:51 Speaker 3
+Claro, Escoba, no. Ya tiramos con un vino, con una pala de la que se recoge, que tú le das con la hebilla.
+00:03:03 Speaker 2
+De la pala. La que tiene el collón ese grande.
+00:03:10 Speaker 1
+Una de guaro.
+00:03:11 Speaker 3
+Pero Hay que estar en la coba. Tiene que ser extremadamente.
+00:03:14 Speaker 1
+No, es que tiene. Es diferente esquina, esquina. Uno en Cristo Rey, uno allá en Palomino, en Los Ríos. Nunca he visto un juego metida en el rollo hondo. También. Pero eso se puede hacer así. Lo ponemos casi, lo que se hace me mostró. Tu location y sacamos un par de locations ¿Qué pasa el mapa?
+00:03:45 Speaker 1
+Tan la location.
+00:03:46 Speaker 2
+Estados Unidos,
+00:03:48 Speaker 1
+Tu tienes tan square, podemos llevar a los fondecitos, está Nash, mira ahí, es lo mismo el lomo, la vaina, para que no se sientan que se descriaron. Es uniforme, es bermuda, chancletica y un jersey de tu cuadro. Las que tienen.
+00:04:02 Speaker 3
+Unas negras son ya que están en la selección. El diablo, loco, pero como eso es.
+00:04:14 Speaker 2
+Chancleta, pantaloncito.
+00:04:18 Speaker 1
+Sí, Porque es un flow.
+00:04:35 Speaker 1
+Mira a ver si el de los audífonos.
+00:04:38 Speaker 3
+No, pero chequeate, chequeate el de la carajito de la pintura número uno ahora mismo mira son diez gentes, diez panas, nosotros vamos a decir y a uno le toca buscar y la gente se hay unos tigres que pintan bacanis y mira.
+00:05:06 Speaker 2
+Que lo que era loco para ese es el escondido,
+00:05:09 Speaker 3
+El escondido, Pila de duro eso eso nada más está pa PC cómo es que se llama eso? Yo que yo no me acuerdo el nombre mira ve no tiene que decir abajo nombre nada para donde yo te encuentro te matan te pegas un tiro me encanta la dinámica si tengo tres te meto un tiro.
+00:05:39 Speaker 3
+Como mongos, como el codito y dibújalo.
+00:05:45 Speaker 2
+El De mi tío hace una dos.
+00:05:46 Speaker 1
+El de pelota. Porque este eran los flow.
+00:05:52 Speaker 1
+Pero hay uno nuevo.
+00:05:57 Speaker 1
+Y Joel. Acecha.
+00:06:02 Speaker 1
+Porque es el flow. Dígame, estamos armando, estamos armando la salida. De cuántos metros cuadrados quiero alguien habla conmigo de qué? No te preocupes, desde que tengamos el espacio yo te voy a. Cómo diseño el juegos,
+00:06:21 Speaker 2
+Cómo diseño el juegos, juegos de vitilla para consolas de dispositivo móvil?
+00:06:30 Speaker 1
+Cuáles son las reglas, la vistilla? Por qué explicas hacerlo? Claro, me explico como tú ponchas una gente, como tú has helado. Si yo te tiro, la vitilla sigue rodando, yo no la puedo aplatar. Si yo la aplato es safe. Entonces tiene que haber una mecánica como de pick up para que tú no.
+00:06:57 Speaker 3
+Combinaciones de teclas.
+00:06:59 Speaker 1
+Cómo es una vaina? A, B, X, Y, que se yo. Ya la agarraste que cuando él.
+00:07:09 Speaker 3
+Lo carga, tú ves. Exacto, ya sí, si tiene 3 turnos seguidos, 2 turnos y tercero y está prendido.
+00:07:21 Speaker 1
+Qué maleta.
+00:07:24 Speaker 2
+No porque aparte que como es en el móvil no va a tener que usar tanta a tanta botones en un día. Ajá. Hay botones específicos en.
+00:07:32 Speaker 1
+En en los tiene que ser algo de timing, flow, la barrita que va dando pa arriba y pa abajo y tú tienes que cacharla en en un rango a veces. Ahí tú ponchas la gente.
+00:07:40 Speaker 2
+Igual pa igual pa la recogida.
+00:07:42 Speaker 1
+Correcto. Entonces para el bateo entonces los poderes de los pitcher es que te van a dividir el rango. Por ejemplo si tú vas batear se juega en, Si se juega con base, sin base, cuando son diferentes Y podemos hacer la misma mecánica Vamos a usar la misma mecánica de Mario Superstar Baseball Pero lo vamos a cambiar por supuesto, por la vitilla Cualquier vaina busca vitilla dominicana y nutre este heavy.
+00:08:12 Speaker 2
+El tema como una vitilla es que la vitilla es nativa,
+00:08:15 Speaker 1
+La vitilla es parada y pisada Y si esta vaina juega, porque si está girando y yo la agarro, Por eso tienen que haber completo. Ah pues tenemos dos, tenemos dos modos de juegos con base y sin base. Me entiendes? Entonces si te fuiste, si te fuiste con base lo hacemos como el Superstar Baseball de Mario.
+00:08:38 Speaker 2
+No, yo sé. Pero ahí.
+00:08:40 Speaker 1
+Es donde vamos. Debe de ser diferente porque si estamos jugando con base tú agarras pan yo te la puedo, Yo como quiera, yo te la puedo tirar a ti porque es lo mismo, es pelota, pero con una, pero con vitilla,
+00:08:56 Speaker 2
+Porque en teoría es físico. No, no,
+00:09:01 Speaker 1
+No, pero es que tú no vas, tú no, tú no vas, como se dice, tú no vas a controlar eso, esto no controlaba eso, yo me acuerdo, tú, por ejemplo, tú tenías botones, la A era primera, la B era segunda y la Y era tercera, por ejemplo, y tú decidías para donde mandarla. Si tú lo mandaste para tercera y era para primera, pues más la tuya. Que van a meter dobles y era como es el flow. Se puede hacer lo mismo loco, claro que sí.
+00:09:28 Speaker 3
+Yo jugaba no hace mucho tiempo de ellos. Está casi desarrollado eso.
+00:09:34 Speaker 1
+Entonces Mario Super Star Baseball.
+00:09:38 Speaker 1
+Dispositivos móviles.
+00:09:42 Speaker 1
+Flow vitilla.
+00:09:44 Speaker 1
+Sí, lo mismo, es lo mismo,
+00:09:47 Speaker 3
+Lo mismo. Tienes el modo de juegos con base.
+00:09:55 Speaker 3
+Los tigres son un vampiro.
+00:09:58 Speaker 1
+De mierda. La grada tienen que estar bebiendo, sí. Sí, tienen que estar bebiendo los colmados.
+00:10:06 Speaker 1
+Tenemos que entonces decidir cuáles son las esquinas que vamos a coger. El diablo?
+00:10:12 Speaker 1
+No, pues así como acá. Qué es? Tiene que.
+00:10:20 Speaker 2
+Haber, subir como el sonido. Frases, frases célebres.
+00:10:31 Speaker 1
+No te de la vaina de los de los muñequitos de arte, de la frase.
+00:10:34 Speaker 2
+Hay que tener cuidado con la frase porque no te ponches, no ponches gama de oro, esos son satanizados. No hay piso de barrio, no está en ningún lado.
+00:10:46 Speaker 2
+Loco, claro que sí. Si la batea por todo lo que pase por aquí la paga peso, vaina así.
+00:10:54 Speaker 1
+Que se lo poseen y se lo pongan en una vaina, se le oyen el celular.
+00:11:01 Speaker 2
+Calle que calle tú me haces eso en el país coge el país el país no hay.
+00:11:08 Speaker 1
+Que ser muy lejos nos metemos y empezamos a dar vueltas fue y lo parqueamos ahí coge esta coge esta coge aquella.
+00:11:16 Speaker 2
+Dice okay Dominicana cuarenta y dos, Lumina, Quito Rey, San Carlos.
+00:11:24 Speaker 1
+Ahora mi meta es jugar es el problema ahora. Ay coño. En Italia dizque de pizza.
+00:11:39 Speaker 1
+Exactamente no te apures.
+00:11:50 Speaker 1
+No, pero nosotros vamos a tener cerveza.
+00:11:56 Speaker 1
+En verdad los gringos beben pila de cerveza, pila de coleslaw y vaina de la de la tica.
+00:12:03 Speaker 1
+Tenemos la idea inicial, así ya.
