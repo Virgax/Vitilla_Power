@@ -1,19 +1,16 @@
 # Vitilla Power — Prototipo web
 
 Prototipo **desechable** para sentir el *core loop* de bateo por *timing*. Vanilla JS +
-HTML5 Canvas, **sin dependencias ni build**.
+HTML5 Canvas, **sin dependencias ni build**. Es un **único archivo autocontenido**
+(`index.html` con el CSS y el JS adentro), así que basta con abrirlo.
 
 ## Cómo probarlo
 
-**Opción rápida:** abre `index.html` directamente en el navegador (móvil o escritorio).
+**Solo haz doble clic en `index.html`** (o arrástralo al navegador). Funciona en móvil y
+escritorio sin servidor ni instalación, porque todo está dentro del mismo archivo.
 
-**Servidor local** (recomendado en móvil):
-
-```bash
-cd prototype/web
-python3 -m http.server 8000
-# luego abre http://TU_IP:8000 en el teléfono (misma red Wi-Fi)
-```
+> Si antes lo viste "sin estilos / sin botones", era porque el navegador no cargaba los
+> archivos `.css`/`.js` vecinos. Ahora va todo en `index.html` y eso ya no pasa.
 
 ## Flujo
 
