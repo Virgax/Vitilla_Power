@@ -97,13 +97,18 @@ Se usan **estratégicamente** durante el partido y pueden cambiar la jugada.
 - Pícheo controlado (curva + carga de fuerza) y bateo por timing.
 - Power-ups de ambos lados. Diana de strike. Vitilla con física de frisbee.
 
-**Pendiente (inspirado en Baseball Clash):**
-1. **Corrido de bases** y fildeo (recogida con timing + tiro a base).
-2. **Conteo** completo (bolas/strikes/outs) y base por bolas adaptada.
-3. **Online 1v1** en tiempo real (matchmaking).
-4. **Roster coleccionable** con rareza, niveles y habilidades por personaje.
-5. **Economía/progresión** (monedas, XP de mánager, recompensas).
-6. **Modos** (torneos, eventos).
+**Añadido en esta iteración (motor de partido completo):**
+- ✅ **Conteo** de bolas/strikes/outs, **zona de strike**, **base por bolas** y ponche.
+- ✅ **Corrido de bases** en el diamante (1ra/2da/3ra + home) y carreras.
+- ✅ **Fildeo con timing** (la defensa —humano o CPU— fildea a tiempo para el out).
+- ✅ **Entradas** (alta/baja) y fin de partido por marcador.
+
+**Pendiente (meta-juego de Baseball Clash):**
+1. **Online 1v1** en tiempo real (matchmaking).
+2. **Roster coleccionable** con rareza, niveles y habilidades por personaje.
+3. **Economía/progresión** (monedas, XP de mánager, cofres/recompensas).
+4. **Modos** (torneos, eventos).
+5. Fildeo manual avanzado (mover fildeador, elegir base del tiro) y doble-play.
 
 ## 11. Cómo trabajamos con la app de referencia (sin subir el binario)
 

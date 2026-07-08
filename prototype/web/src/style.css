@@ -168,6 +168,38 @@ html, body {
   #btn-swing:active { transform: translateY(4px); }
 }
 
+/* Mini-diamante de bases */
+#diamond {
+  position: absolute; top: 78px; right: 12px;
+  width: 84px; height: 84px; transform: rotate(45deg);
+  pointer-events: none;
+}
+#diamond .base {
+  position: absolute; width: 26px; height: 26px; border-radius: 5px;
+  background: rgba(0,0,0,0.45); border: 2px solid rgba(255,255,255,0.5);
+}
+#diamond .bh { bottom: 0; right: 0; }
+#diamond .b1 { top: 0; right: 0; }
+#diamond .b2 { top: 0; left: 0; }
+#diamond .b3 { bottom: 0; left: 0; }
+#diamond .base.on { background: var(--gold); border-color: #fff; box-shadow: 0 0 8px var(--gold); }
+
+/* Botón de fildeo (defensa) */
+#btn-field-play {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: #16a34a; color: #fff; border: none; border-radius: 50px;
+  font-size: 22px; font-weight: bold; padding: 18px 40px; cursor: pointer;
+  box-shadow: 0 6px 0 #0d6b30; touch-action: none; min-width: 200px;
+}
+#btn-field-play:active { transform: translateX(-50%) translateY(4px); box-shadow: 0 2px 0 #0d6b30; }
+#btn-field-play.hidden { display: none; }
+#btn-field-play.hot { animation: pulse 0.4s infinite alternate; }
+@media (orientation: landscape) {
+  #btn-field-play { left: auto; right: 24px; transform: none; bottom: 20px; }
+  #btn-field-play:active { transform: translateY(4px); }
+  #diamond { top: 12px; right: 12px; }
+}
+
 /* Aviso si WebGL/Three no carga */
 #webgl-error {
   position: absolute; inset: 0; display: none; align-items: center; justify-content: center;

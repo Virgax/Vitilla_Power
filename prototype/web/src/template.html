@@ -66,12 +66,22 @@
     <!-- PANTALLA: JUEGO 3D -->
     <section id="screen-game" class="screen">
       <canvas id="game-canvas"></canvas>
+
       <div id="hud">
         <div class="hud-item"><span class="hud-label">Marcador</span><span id="hud-score">0–0</span></div>
-        <div class="hud-item"><span class="hud-label">Entrada</span><span id="hud-inning">1</span></div>
+        <div class="hud-item"><span class="hud-label">Entrada</span><span id="hud-inning">1 ▲</span></div>
+        <div class="hud-item"><span class="hud-label">Cuenta</span><span id="hud-count">0-0</span></div>
         <div class="hud-item"><span class="hud-label">Outs</span><span id="hud-outs">0</span></div>
-        <div class="hud-item power" id="hud-power"><span class="hud-label">Power-up</span><span id="hud-power-val">—</span></div>
       </div>
+
+      <!-- Mini-diamante: bases ocupadas -->
+      <div id="diamond">
+        <div class="base b2"></div>
+        <div class="base b3"></div>
+        <div class="base b1"></div>
+        <div class="base bh"></div>
+      </div>
+
       <div id="role-banner"></div>
       <div id="message"></div>
       <button id="btn-quit">Salir</button>
@@ -86,6 +96,9 @@
         </div>
         <div id="charge-wrap"><div id="charge-fill"></div></div>
       </div>
+
+      <!-- Botón de fildeo (defensa) -->
+      <button id="btn-field-play" class="hidden">🧤 ¡FILDEA!</button>
 
       <button id="btn-action">¡BATEAR!</button>
       <div id="webgl-error"></div>

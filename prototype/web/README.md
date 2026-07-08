@@ -27,17 +27,24 @@ que la vitilla cruza el plato.
 - **Mantén LANZAR** para cargar la **fuerza** (más carga = más rápido; si te pasas, sale
   salvaje) y **suelta** para lanzar.
 
-## Mecánica
+## Mecánica (motor de partido completo, estilo Baseball Clash)
 
-- 🧍 **Personaje → 🏟️ Campo → 🎮 Modo → ⚾ Duelo 3D.** Los jugadores son **personajes 3D**
-  (cuerpo, jersey, bermuda, chancletas, gorra, bate). El bateador hace su **swing** y el pícher
-  **lanza** con animación, al estilo *Mario Superstar Baseball*.
-- ⚔️ **Duelo por turnos:** un lado **batea** (hasta 3 outs/gillas) mientras el otro **pichea**;
-  luego cambian. Gana quien anote más **carreras**.
+- 🧍 **Personaje → 🏟️ Campo → 🎮 Modo → ⚾ Duelo 3D.** Personajes 3D con animación de swing y
+  lanzamiento.
+- 🔢 **Conteo real:** **bolas y strikes**. Si dejas pasar una vitilla:
+  - dentro de la **zona de strike** = strike cantado; fuera = **bola**.
+  - **3 strikes = ponche (out)**, **4 bolas = base por bolas** (avanzas a 1ra).
+  - abanicar y fallar = strike; **foul** = strike (salvo con 2 strikes).
+- 🏃 **Corrido de bases:** los hits avanzan al bateador y a los corredores por el **diamante**
+  (mini-diamante en pantalla); cada corredor que llega a home = **carrera**.
+- 🧤 **Fildeo (¡ambos lados juegan!):** al conectar, la vitilla va al jardín y la **defensa**
+  debe **fildear a tiempo** (botón 🧤 con ventana). Fildeo exitoso = **out**; si falla, el
+  bateador llega a base (sencillo/doble). La CPU fildea sola.
+- ⚔️ **Estructura:** 3 entradas (alta/baja); 3 outs por media entrada; gana quien anote más.
 - ⚡ **Power-ups de ambos lados:**
-  - **Bateador:** en el 3er turno (al llegar a 2 outs) se **amplía la ventana** de bateo.
-  - **Pícher:** al armar su poder, el lanzamiento **reduce la ventana** del bateador y curva
-    más (vitilla "encendida").
+  - **Bateador:** en el 3er turno (a 2 outs) se **amplía la ventana** de bateo.
+  - **Pícher:** al armar su poder, **reduce la ventana** del bateador y curva más (vitilla
+    "encendida" 🔥).
 - 🧢 **Vitilla = tapa real:** modelada como una **tapa/bitilla** (tope abombado + falda ancha
   abajo, perfil revolucionado), con **colores variados** (amarillo, verde, azul, lila) como en
   la realidad.
