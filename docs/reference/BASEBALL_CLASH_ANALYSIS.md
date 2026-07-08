@@ -103,12 +103,22 @@ Se usan **estratégicamente** durante el partido y pueden cambiar la jugada.
 - ✅ **Fildeo con timing** (la defensa —humano o CPU— fildea a tiempo para el out).
 - ✅ **Entradas** (alta/baja) y fin de partido por marcador.
 
-**Pendiente (meta-juego de Baseball Clash):**
-1. **Online 1v1** en tiempo real (matchmaking).
-2. **Roster coleccionable** con rareza, niveles y habilidades por personaje.
-3. **Economía/progresión** (monedas, XP de mánager, cofres/recompensas).
-4. **Modos** (torneos, eventos).
-5. Fildeo manual avanzado (mover fildeador, elegir base del tiro) y doble-play.
+**Añadido: shell/meta del juego (arte y branding ORIGINALES de vitilla):**
+- ✅ **Hub de inicio** con monedas/gemas, nivel de mánager + barra de XP, capitán y JUGAR.
+- ✅ **Equipo/roster** como cartas con **rareza** (Común/Raro/Legendario), nivel y habilidad.
+- ✅ **Tienda** (placeholder) y **navegación** inferior tipo F2P.
+- ✅ **Resultados** con **recompensas** (monedas + XP que suben el nivel) y revancha/menú.
+- ✅ **Progresión persistida** (localStorage): monedas, nivel y capitán se guardan.
+
+> Nota: replicamos la **estructura/flujo** de un juego F2P (patrones genéricos) con **arte,
+> textos y branding propios**. No se copian pantallas, assets ni código de Baseball Clash.
+
+**Pendiente (para acercarnos más):**
+1. **Online 1v1** en tiempo real (matchmaking) y **torneos/eventos**.
+2. **Mejora de cartas** real (gastar monedas para subir nivel; habilidades que escalan).
+3. **Cofres/recompensas** con contenido y tienda funcional.
+4. **Fildeo manual avanzado** (mover fildeador, elegir base del tiro) y doble-play.
+5. **Salto de gráficos** a alta fidelidad (assets 3D) — probablemente en Godot/Unity.
 
 ## 11. Cómo trabajamos con la app de referencia (sin subir el binario)
 

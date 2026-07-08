@@ -11,6 +11,20 @@ funciona **sin internet** y sin servidor, en móvil o escritorio.
 
 > Gira el teléfono: el juego se adapta tanto vertical como horizontalmente.
 
+## Shell del juego (estilo Baseball Clash, con arte propio)
+
+El prototipo ahora tiene la **estructura de un juego F2P completo** (todo con branding y arte
+**original** de vitilla — no se copian assets de Baseball Clash):
+
+- 🏠 **Inicio (hub):** monedas 🪙 y gemas 💎, nivel de mánager con barra de XP, **capitán**
+  elegido, botón **JUGAR**, y nav inferior (Inicio / Equipo / Tienda).
+- 👥 **Equipo:** roster de personajes como **cartas con rareza** (Común/Raro/Legendario),
+  nivel y habilidad; eliges tu **capitán/bateador**.
+- 🛒 **Tienda:** placeholder (cofres, palos, monedas — próximamente).
+- 🏁 **Resultados:** al terminar el partido, pantalla de victoria/derrota con **recompensas**
+  (monedas + XP que suben tu nivel de mánager) y botones **Revancha / Menú**.
+- 💾 El **progreso se guarda** (monedas/nivel/capitán) en el dispositivo.
+
 ## Modos
 
 - 🤖 **vs Máquina (CPU):** pícheas y bateas contra la IA.

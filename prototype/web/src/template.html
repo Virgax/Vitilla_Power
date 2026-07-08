@@ -14,33 +14,68 @@
 <body>
   <div id="app">
 
-    <!-- PANTALLA: PERSONAJE -->
-    <section id="screen-character" class="screen select active">
-      <header class="topbar">
-        <h1>VITILLA <span>POWER</span></h1>
-        <p class="tagline">Selecciona tu personaje</p>
+    <!-- ===================== HOME / HUB ===================== -->
+    <section id="screen-home" class="screen hub active">
+      <header class="hub-top">
+        <div class="chips">
+          <span class="chip">🪙 <b id="coins">0</b></span>
+          <span class="chip">💎 <b id="gems">0</b></span>
+        </div>
+        <button id="btn-settings" class="icon-btn">⚙️</button>
       </header>
-      <div id="character-grid" class="grid"></div>
-      <div class="actions">
-        <button id="btn-random" class="btn ghost">🎲 Aleatorio</button>
-        <button id="btn-to-field" class="btn primary" disabled>Continuar →</button>
+
+      <div class="hub-hero">
+        <h1 class="logo">VITILLA <span>POWER</span></h1>
+        <div id="captain-card" class="captain"></div>
+        <div class="level-wrap">
+          <span class="level-label">Mánager Nv <b id="mgr-level">1</b></span>
+          <div class="xp-bar"><div id="xp-fill"></div></div>
+        </div>
+        <button id="btn-play" class="btn-play">JUGAR ⚾</button>
       </div>
+
+      <nav class="bottom-nav">
+        <button class="nav-btn active" data-nav="home">🏠<span>Inicio</span></button>
+        <button class="nav-btn" data-nav="team">👥<span>Equipo</span></button>
+        <button class="nav-btn" data-nav="shop">🛒<span>Tienda</span></button>
+      </nav>
     </section>
 
-    <!-- PANTALLA: CAMPO -->
-    <section id="screen-field" class="screen select">
-      <header class="topbar">
-        <h1>Selecciona el campo</h1>
-        <p class="tagline">Más escenarios en camino…</p>
+    <!-- ===================== EQUIPO / ROSTER ===================== -->
+    <section id="screen-team" class="screen hub">
+      <header class="hub-top">
+        <div class="chips"><span class="chip">🪙 <b class="coins">0</b></span><span class="chip">💎 <b class="gems">0</b></span></div>
       </header>
-      <div id="field-grid" class="grid"></div>
-      <div class="actions">
-        <button id="btn-back-character" class="btn ghost">← Atrás</button>
-        <button id="btn-to-mode" class="btn primary" disabled>Continuar →</button>
+      <div class="hub-body">
+        <h2 class="hub-title">Tu Equipo</h2>
+        <p class="hub-sub">Elige tu bateador (capitán)</p>
+        <div id="team-grid" class="grid roster"></div>
       </div>
+      <nav class="bottom-nav">
+        <button class="nav-btn" data-nav="home">🏠<span>Inicio</span></button>
+        <button class="nav-btn active" data-nav="team">👥<span>Equipo</span></button>
+        <button class="nav-btn" data-nav="shop">🛒<span>Tienda</span></button>
+      </nav>
     </section>
 
-    <!-- PANTALLA: MODO -->
+    <!-- ===================== TIENDA ===================== -->
+    <section id="screen-shop" class="screen hub">
+      <header class="hub-top">
+        <div class="chips"><span class="chip">🪙 <b class="coins">0</b></span><span class="chip">💎 <b class="gems">0</b></span></div>
+      </header>
+      <div class="hub-body">
+        <h2 class="hub-title">Tienda</h2>
+        <p class="hub-sub">Cofres, palos y vitillas — próximamente</p>
+        <div id="shop-grid" class="grid"></div>
+      </div>
+      <nav class="bottom-nav">
+        <button class="nav-btn" data-nav="home">🏠<span>Inicio</span></button>
+        <button class="nav-btn" data-nav="team">👥<span>Equipo</span></button>
+        <button class="nav-btn active" data-nav="shop">🛒<span>Tienda</span></button>
+      </nav>
+    </section>
+
+    <!-- ===================== MODO ===================== -->
     <section id="screen-mode" class="screen select">
       <header class="topbar">
         <h1>Modo de juego</h1>
@@ -48,22 +83,41 @@
       </header>
       <div id="mode-grid" class="grid">
         <div class="card" id="mode-cpu">
-          <span class="emoji">🤖</span>
-          <div class="name">vs Máquina</div>
-          <div class="desc">Pelea contra la CPU. Tú pícheas y bateas.</div>
+          <span class="emoji">🤖</span><div class="name">vs Máquina</div>
+          <div class="desc">Pelea contra la CPU.</div>
         </div>
         <div class="card" id="mode-2p">
-          <span class="emoji">🧑‍🤝‍🧑</span>
-          <div class="name">2 Jugadores</div>
+          <span class="emoji">🧑‍🤝‍🧑</span><div class="name">2 Jugadores</div>
           <div class="desc">Por turnos en el mismo dispositivo.</div>
+        </div>
+        <div class="card locked">
+          <span class="emoji">🌎</span><div class="name">Online 1v1</div>
+          <div class="desc">Próximamente</div><span class="badge" style="background:#777">🔒</span>
+        </div>
+        <div class="card locked">
+          <span class="emoji">🏆</span><div class="name">Torneo</div>
+          <div class="desc">Próximamente</div><span class="badge" style="background:#777">🔒</span>
         </div>
       </div>
       <div class="actions">
-        <button id="btn-back-field" class="btn ghost">← Atrás</button>
+        <button id="btn-mode-back" class="btn ghost">← Menú</button>
       </div>
     </section>
 
-    <!-- PANTALLA: JUEGO 3D -->
+    <!-- ===================== CAMPO ===================== -->
+    <section id="screen-field" class="screen select">
+      <header class="topbar">
+        <h1>Selecciona el campo</h1>
+        <p class="tagline">Más escenarios en camino…</p>
+      </header>
+      <div id="field-grid" class="grid"></div>
+      <div class="actions">
+        <button id="btn-field-back" class="btn ghost">← Atrás</button>
+        <button id="btn-to-game" class="btn primary" disabled>¡Jugar! ⚾</button>
+      </div>
+    </section>
+
+    <!-- ===================== JUEGO 3D ===================== -->
     <section id="screen-game" class="screen">
       <canvas id="game-canvas"></canvas>
 
@@ -74,19 +128,15 @@
         <div class="hud-item"><span class="hud-label">Outs</span><span id="hud-outs">0</span></div>
       </div>
 
-      <!-- Mini-diamante: bases ocupadas -->
       <div id="diamond">
-        <div class="base b2"></div>
-        <div class="base b3"></div>
-        <div class="base b1"></div>
-        <div class="base bh"></div>
+        <div class="base b2"></div><div class="base b3"></div>
+        <div class="base b1"></div><div class="base bh"></div>
       </div>
 
       <div id="role-banner"></div>
       <div id="message"></div>
       <button id="btn-quit">Salir</button>
 
-      <!-- Controles de pícheo (solo cuando un humano pichea) -->
       <div id="pitch-controls" class="hidden">
         <div id="curve-row">
           <button class="curve-btn" data-curve="left">⟲ Izq</button>
@@ -97,11 +147,22 @@
         <div id="charge-wrap"><div id="charge-fill"></div></div>
       </div>
 
-      <!-- Botón de fildeo (defensa) -->
       <button id="btn-field-play" class="hidden">🧤 ¡FILDEA!</button>
-
       <button id="btn-action">¡BATEAR!</button>
       <div id="webgl-error"></div>
+    </section>
+
+    <!-- ===================== RESULTADO ===================== -->
+    <section id="screen-results" class="screen results">
+      <div class="results-card">
+        <h1 id="res-title">¡GANASTE!</h1>
+        <div id="res-score" class="res-score">0 – 0</div>
+        <div id="res-reward" class="res-reward"></div>
+        <div class="results-actions">
+          <button id="btn-rematch" class="btn primary">Revancha 🔁</button>
+          <button id="btn-menu" class="btn ghost">Menú 🏠</button>
+        </div>
+      </div>
     </section>
 
   </div>

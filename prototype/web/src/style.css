@@ -24,6 +24,87 @@ html, body {
 .screen { display: none; flex: 1; min-height: 0; }
 .screen.active { display: flex; }
 
+/* ================= HUB (home / equipo / tienda) ================= */
+.screen.hub {
+  flex-direction: column;
+  max-width: 640px; width: 100%; margin: 0 auto;
+  padding: 0; overflow: hidden;
+}
+.hub-top {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; gap: 8px;
+}
+.chips { display: flex; gap: 8px; }
+.chip {
+  background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px; padding: 6px 12px; font-size: 14px; font-weight: bold;
+}
+.chip b { color: var(--gold); }
+.icon-btn { background: rgba(0,0,0,0.35); border: none; color: #fff; border-radius: 50%;
+  width: 40px; height: 40px; font-size: 18px; cursor: pointer; }
+
+.hub-hero {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 18px; padding: 10px 18px; text-align: center;
+}
+.logo { margin: 0; font-size: clamp(30px, 9vw, 56px); letter-spacing: 2px; text-shadow: 3px 3px 0 var(--green-deep); }
+.logo span { color: var(--gold); }
+.captain {
+  background: rgba(255,255,255,0.08); border: 2px solid var(--gold); border-radius: 18px;
+  padding: 14px 22px; min-width: 200px;
+}
+.captain .cap-emoji { font-size: 64px; display: block; }
+.captain .cap-name { font-weight: bold; font-size: 18px; margin-top: 6px; }
+.captain .cap-skill { font-size: 13px; opacity: 0.85; }
+.captain .cap-rarity { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+.level-wrap { width: min(320px, 80%); }
+.level-label { font-size: 13px; opacity: 0.9; }
+.xp-bar { height: 12px; background: rgba(0,0,0,0.4); border-radius: 8px; overflow: hidden; margin-top: 4px; }
+#xp-fill { height: 100%; width: 30%; background: linear-gradient(90deg, var(--green-light), var(--gold)); }
+
+.btn-play {
+  background: var(--green-light); color: var(--ink); border: none; border-radius: 50px;
+  font-size: 26px; font-weight: bold; letter-spacing: 1px; padding: 18px 60px; cursor: pointer;
+  box-shadow: 0 6px 0 #1f8f4f;
+}
+.btn-play:active { transform: translateY(4px); box-shadow: 0 2px 0 #1f8f4f; }
+
+.bottom-nav {
+  display: flex; border-top: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.25);
+}
+.nav-btn {
+  flex: 1; background: none; border: none; color: var(--paper); opacity: 0.6;
+  padding: 10px 4px; font-size: 22px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.nav-btn span { font-size: 11px; }
+.nav-btn.active { opacity: 1; color: var(--gold); }
+
+.hub-body { flex: 1; overflow-y: auto; padding: 8px 14px; }
+.hub-title { margin: 6px 0 2px; text-align: center; }
+.hub-sub { margin: 0 0 12px; text-align: center; opacity: 0.8; font-size: 14px; }
+
+/* Cartas de roster con rareza */
+.grid.roster { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+.card.rar-comun { border-color: #9aa4ad; }
+.card.rar-raro { border-color: #3aa0ff; }
+.card.rar-legendario { border-color: var(--gold); box-shadow: 0 0 12px rgba(245,197,66,0.4); }
+.card .lvl { font-size: 11px; background: rgba(0,0,0,0.4); border-radius: 8px; padding: 2px 6px; display: inline-block; margin-top: 4px; }
+.card .rar { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 3px; }
+
+/* ================= RESULTADOS ================= */
+.screen.results { align-items: center; justify-content: center; }
+.results-card {
+  background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.15); border-radius: 20px;
+  padding: 28px 26px; text-align: center; max-width: 380px; width: 88%;
+}
+.results-card h1 { margin: 0 0 8px; font-size: 38px; text-shadow: 2px 2px 0 var(--green-deep); }
+.results-card.win h1 { color: var(--gold); }
+.results-card.lose h1 { color: #ff7b7b; }
+.res-score { font-size: 26px; font-weight: bold; margin-bottom: 12px; }
+.res-reward { font-size: 16px; margin-bottom: 20px; opacity: 0.95; }
+.results-actions { display: flex; flex-direction: column; gap: 10px; }
+
 /* ---- Pantallas de selección (scrollables, portrait/landscape) ---- */
 .screen.select {
   flex-direction: column;

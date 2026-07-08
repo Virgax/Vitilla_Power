@@ -7,15 +7,14 @@
 
 /* ---------- Datos ---------- */
 const CHARACTERS = [
-  { id: "diablo",  emoji: "😈", name: "El Diablo",   desc: "Palo legendario",         power: "Bola de Fuego",    color: 0xe23b3b, skin: 0x8d5524, shorts: 0x222831 },
-  { id: "tiguere", emoji: "😎", name: "El Tíguere",  desc: "Puro flow de esquina",    power: "Swing Doble",      color: 0x1f6feb, skin: 0xc68642, shorts: 0x1b1b1b },
-  { id: "capitan", emoji: "🧢", name: "El Capi",     desc: "El líder del cuadro",     power: "Ojo de Águila",    color: 0x2ecc71, skin: 0x5c3a1e, shorts: 0xf0f0f0 },
-  { id: "dona",    emoji: "💃", name: "La Doña",     desc: "No falla una",            power: "Cadera Caliente",  color: 0xff5fa2, skin: 0xe0ac69, shorts: 0x3a2e4d },
-  { id: "guaro",   emoji: "🍺", name: "El Guaro",    desc: "Pega con cualquier cosa", power: "Aplane Seguro",    color: 0xf5c542, skin: 0x7a4a21, shorts: 0x2d4739 },
-  { id: "flaco",   emoji: "🦴", name: "El Flaco",    desc: "Rápido como un rayo",     power: "Vitilla Freeze",   color: 0x9b59b6, skin: 0xa86b38, shorts: 0x222831 },
-  { id: "random",  emoji: "🎲", name: "Sorpresa",    desc: "Personaje aleatorio",     power: "???", isRandom: true },
-  { id: "create",  emoji: "📸", name: "Crea el tuyo", desc: "Avatar por selfie (próximamente)", power: "El tuyo", isCreate: true },
+  { id: "diablo",  emoji: "😈", name: "El Diablo",   desc: "Palo legendario",         power: "Bola de Fuego",    rarity: "legendario", level: 3, color: 0xe23b3b, skin: 0x8d5524, shorts: 0x222831 },
+  { id: "tiguere", emoji: "😎", name: "El Tíguere",  desc: "Puro flow de esquina",    power: "Swing Doble",      rarity: "raro",       level: 2, color: 0x1f6feb, skin: 0xc68642, shorts: 0x1b1b1b },
+  { id: "capitan", emoji: "🧢", name: "El Capi",     desc: "El líder del cuadro",     power: "Ojo de Águila",    rarity: "raro",       level: 2, color: 0x2ecc71, skin: 0x5c3a1e, shorts: 0xf0f0f0 },
+  { id: "dona",    emoji: "💃", name: "La Doña",     desc: "No falla una",            power: "Cadera Caliente",  rarity: "legendario", level: 3, color: 0xff5fa2, skin: 0xe0ac69, shorts: 0x3a2e4d },
+  { id: "guaro",   emoji: "🍺", name: "El Guaro",    desc: "Pega con cualquier cosa", power: "Aplane Seguro",    rarity: "comun",      level: 1, color: 0xf5c542, skin: 0x7a4a21, shorts: 0x2d4739 },
+  { id: "flaco",   emoji: "🦴", name: "El Flaco",    desc: "Rápido como un rayo",     power: "Vitilla Freeze",   rarity: "comun",      level: 1, color: 0x9b59b6, skin: 0xa86b38, shorts: 0x222831 },
 ];
+const RARITY_LABEL = { comun: "Común", raro: "Raro", legendario: "Legendario" };
 
 const FIELDS = [
   { id: "stadium",  emoji: "🏟️", name: "Baseball Stadium", desc: "Campo base del prototipo", sky: 0x8ecbff, grass: 0x3f9f4a },
@@ -24,7 +23,7 @@ const FIELDS = [
   { id: "losrios",   emoji: "🌆", name: "Los Ríos",        desc: "Próximamente", locked: true },
 ];
 
-const state = { character: null, field: FIELDS[0] };
+const state = { character: null, field: FIELDS[0], mode: "cpu" };
 
 // Colores reales de vitillas (como en la foto de referencia): amarillo, verde, azul, lila
 const VITILLA_COLORS = [0xe8c84b, 0x6fa84a, 0x4fa3d1, 0x6e7bc8, 0x2f7fc0];
@@ -34,57 +33,121 @@ function show(id) {
   document.getElementById(id).classList.add("active");
 }
 
-/* ---------- Selección de personaje ---------- */
-const characterGrid = document.getElementById("character-grid");
-const btnToField = document.getElementById("btn-to-field");
+/* ============================================================
+   PERFIL / META (persistido en localStorage)
+   ============================================================ */
+const PROFILE_KEY = "vitillaPowerProfile";
+const profile = loadProfile();
 
-function pickRandomPlayable() {
-  const playable = CHARACTERS.filter((c) => !c.isRandom && !c.isCreate);
-  return playable[Math.floor(Math.random() * playable.length)];
+function loadProfile() {
+  const def = { coins: 120, gems: 8, level: 1, xp: 0, captainId: "diablo" };
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    if (raw) return Object.assign(def, JSON.parse(raw));
+  } catch (e) { /* localStorage no disponible (file://) — usamos memoria */ }
+  return def;
 }
-function renderCharacters() {
-  characterGrid.innerHTML = "";
+function saveProfile() {
+  try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch (e) { /* ignore */ }
+}
+function xpForLevel(lv) { return 100 + (lv - 1) * 60; }
+function grantRewards(coins, xp) {
+  profile.coins += coins; profile.xp += xp;
+  while (profile.xp >= xpForLevel(profile.level)) { profile.xp -= xpForLevel(profile.level); profile.level += 1; }
+  saveProfile();
+}
+
+/* ============================================================
+   HUB (home / equipo / tienda) + navegación
+   ============================================================ */
+function getCaptain() {
+  return CHARACTERS.find((c) => c.id === profile.captainId) || CHARACTERS[0];
+}
+function refreshCurrencies() {
+  document.getElementById("coins").textContent = profile.coins;
+  document.getElementById("gems").textContent = profile.gems;
+  document.querySelectorAll(".coins").forEach((e) => (e.textContent = profile.coins));
+  document.querySelectorAll(".gems").forEach((e) => (e.textContent = profile.gems));
+}
+function renderHome() {
+  refreshCurrencies();
+  const cap = getCaptain();
+  state.character = cap;
+  document.getElementById("captain-card").innerHTML =
+    '<span class="cap-emoji">' + cap.emoji + '</span>' +
+    '<div class="cap-name">' + cap.name + '</div>' +
+    '<div class="cap-skill">⚡ ' + cap.power + '</div>' +
+    '<div class="cap-rarity">' + RARITY_LABEL[cap.rarity] + ' · Nv ' + cap.level + '</div>';
+  document.getElementById("mgr-level").textContent = profile.level;
+  document.getElementById("xp-fill").style.width = Math.min(100, (profile.xp / xpForLevel(profile.level)) * 100) + "%";
+}
+function renderTeam() {
+  const grid = document.getElementById("team-grid");
+  grid.innerHTML = "";
   CHARACTERS.forEach((c) => {
     const card = document.createElement("div");
-    card.className = "card" + (c.isCreate ? " create" : "");
+    card.className = "card rar-" + c.rarity + (c.id === profile.captainId ? " selected" : "");
     card.innerHTML =
       '<span class="emoji">' + c.emoji + '</span>' +
       '<div class="name">' + c.name + '</div>' +
-      '<div class="desc">' + c.desc + '</div>' +
-      (c.isCreate ? '<span class="badge">SELFIE 📸</span>' : "");
-    card.addEventListener("click", () => selectCharacter(c, card));
-    characterGrid.appendChild(card);
+      '<div class="rar">' + RARITY_LABEL[c.rarity] + '</div>' +
+      '<span class="lvl">Nv ' + c.level + '</span>' +
+      '<div class="desc">⚡ ' + c.power + '</div>';
+    card.addEventListener("click", () => {
+      profile.captainId = c.id; saveProfile();
+      state.character = c;
+      renderTeam(); renderHome();
+    });
+    grid.appendChild(card);
   });
 }
-function selectCharacter(c, card) {
-  let chosen = c;
-  if (c.isRandom) chosen = pickRandomPlayable();
-  if (c.isCreate) {
-    alert("✨ Crea tu propio personaje con un SELFIE.\n\nPlanificado para una fase futura (GDD §11.2).\nPor ahora usarás un personaje del roster.");
-    chosen = pickRandomPlayable();
-  }
-  state.character = chosen;
-  document.querySelectorAll("#character-grid .card").forEach((el) => el.classList.remove("selected"));
-  if (c.isRandom || c.isCreate) {
-    const idx = CHARACTERS.indexOf(chosen);
-    if (characterGrid.children[idx]) characterGrid.children[idx].classList.add("selected");
-  } else card.classList.add("selected");
-  btnToField.disabled = false;
+function renderShop() {
+  const grid = document.getElementById("shop-grid");
+  if (grid.childElementCount) return;
+  const items = [
+    { e: "📦", n: "Cofre de Vitillas", d: "Próximamente" },
+    { e: "🏏", n: "Pack de Palos", d: "Próximamente" },
+    { e: "🪙", n: "Monedas x500", d: "Próximamente" },
+    { e: "💎", n: "Gemas x50", d: "Próximamente" },
+  ];
+  items.forEach((it) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = '<span class="emoji">' + it.e + '</span><div class="name">' + it.n + '</div><div class="desc">' + it.d + '</div>';
+    grid.appendChild(card);
+  });
 }
-document.getElementById("btn-random").addEventListener("click", () => {
-  const chosen = pickRandomPlayable();
-  selectCharacter(chosen, characterGrid.children[CHARACTERS.indexOf(chosen)]);
+
+// Navegación del hub (bottom nav)
+document.querySelectorAll(".nav-btn").forEach((b) => {
+  b.addEventListener("click", () => {
+    const nav = b.getAttribute("data-nav");
+    if (nav === "home") { renderHome(); show("screen-home"); }
+    else if (nav === "team") { renderTeam(); refreshCurrencies(); show("screen-team"); }
+    else if (nav === "shop") { renderShop(); refreshCurrencies(); show("screen-shop"); }
+  });
 });
-btnToField.addEventListener("click", () => show("screen-field"));
+document.getElementById("btn-settings").addEventListener("click", () => {
+  alert("Vitilla Power — prototipo\n\nAjustes próximamente.");
+});
+
+/* ---------- Flujo de partida: Jugar -> Modo -> Campo -> Juego ---------- */
+document.getElementById("btn-play").addEventListener("click", () => show("screen-mode"));
+document.getElementById("btn-mode-back").addEventListener("click", () => { renderHome(); show("screen-home"); });
+
+document.getElementById("mode-cpu").addEventListener("click", () => { state.mode = "cpu"; goField(); });
+document.getElementById("mode-2p").addEventListener("click", () => { state.mode = "2p"; goField(); });
+function goField() { renderFields(); show("screen-field"); }
 
 /* ---------- Selección de campo ---------- */
 const fieldGrid = document.getElementById("field-grid");
-const btnToMode = document.getElementById("btn-to-mode");
+const btnToGame = document.getElementById("btn-to-game");
 function renderFields() {
   fieldGrid.innerHTML = "";
+  btnToGame.disabled = !state.field;
   FIELDS.forEach((f) => {
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card" + (state.field === f ? " selected" : "");
     card.style.opacity = f.locked ? 0.55 : 1;
     card.innerHTML =
       '<span class="emoji">' + f.emoji + '</span>' +
@@ -96,19 +159,35 @@ function renderFields() {
       state.field = f;
       document.querySelectorAll("#field-grid .card").forEach((el) => el.classList.remove("selected"));
       card.classList.add("selected");
-      btnToMode.disabled = false;
+      btnToGame.disabled = false;
     });
     fieldGrid.appendChild(card);
   });
 }
-document.getElementById("btn-back-character").addEventListener("click", () => show("screen-character"));
-btnToMode.addEventListener("click", () => show("screen-mode"));
+document.getElementById("btn-field-back").addEventListener("click", () => show("screen-mode"));
+btnToGame.addEventListener("click", () => { show("screen-game"); Game.start(state.mode || "cpu"); });
+document.getElementById("btn-quit").addEventListener("click", () => { Game.stop(); renderHome(); show("screen-home"); });
 
-/* ---------- Selección de modo (vs CPU / 2 jugadores) ---------- */
-document.getElementById("btn-back-field").addEventListener("click", () => show("screen-field"));
-document.getElementById("mode-cpu").addEventListener("click", () => { show("screen-game"); Game.start("cpu"); });
-document.getElementById("mode-2p").addEventListener("click", () => { show("screen-game"); Game.start("2p"); });
-document.getElementById("btn-quit").addEventListener("click", () => { Game.stop(); show("screen-character"); });
+/* ---------- Resultados ---------- */
+function showResults(res) {
+  // res: { scores:[a,b], mode, humanWon (o null si empate/2p) }
+  const card = document.querySelector("#screen-results .results-card");
+  const s = res.scores;
+  let title, cls, reward;
+  if (s[0] === s[1]) { title = "¡EMPATE!"; cls = ""; reward = 25; }
+  else if (res.mode === "2p") { const w = s[0] > s[1] ? 1 : 2; title = "🏆 ¡Gana Jugador " + w + "!"; cls = "win"; reward = 40; }
+  else if (res.humanWon) { title = "🏆 ¡GANASTE!"; cls = "win"; reward = 60; }
+  else { title = "Perdiste 😔"; cls = "lose"; reward = 15; }
+  const xp = 20 + Math.max(s[0], s[1]) * 5;
+  grantRewards(reward, xp);
+  card.className = "results-card " + cls;
+  document.getElementById("res-title").textContent = title;
+  document.getElementById("res-score").textContent = s[0] + " – " + s[1];
+  document.getElementById("res-reward").innerHTML = "Recompensa: 🪙 <b>+" + reward + "</b> &nbsp; ⭐ <b>+" + xp + " XP</b>";
+  show("screen-results");
+}
+document.getElementById("btn-rematch").addEventListener("click", () => { show("screen-game"); Game.start(state.mode || "cpu"); });
+document.getElementById("btn-menu").addEventListener("click", () => { Game.stop(); renderHome(); show("screen-home"); });
 
 /* ============================================================
    JUEGO 3D
@@ -775,22 +854,13 @@ const Game = (() => {
 
   function endMatch() {
     capState = "over";
+    started = false;
     capRig.visible = false; capShadow.visible = false;
-    hidePitchControls();
-    showActionBtn();
-    const s = match.scores;
-    let txt;
-    if (s[0] === s[1]) txt = "🤝 ¡Empate! " + s[0] + "–" + s[1];
-    else {
-      const w = s[0] > s[1] ? 0 : 1;
-      txt = "🏆 ¡Gana " + sideName(w) + "! " + Math.max(s[0], s[1]) + "–" + Math.min(s[0], s[1]);
-    }
-    setRole("");
-    setMessage(txt, "#fff");
-    btnAction.classList.remove("pitching");
-    btnAction.disabled = false;
-    btnAction.textContent = "JUGAR OTRA VEZ";
-    actionMode = "restart";
+    hidePitchControls(); hideBottomBtns();
+    setRole(""); setMessage("", "#fff");
+    const s = match.scores.slice();
+    // pasa a la pantalla de resultados (con recompensas)
+    showResults({ scores: s, mode: match.mode, humanWon: s[0] > s[1] });
   }
 
   function updateBasesUI() {
@@ -914,6 +984,5 @@ const Game = (() => {
 })();
 
 /* ---------- Init ---------- */
-renderCharacters();
-renderFields();
-show("screen-character");
+renderHome();
+show("screen-home");
