@@ -23,6 +23,7 @@ navegador (móvil o escritorio). Es un único archivo autocontenido. Ver
 | [`docs/GDD.md`](docs/GDD.md) | Documento de Diseño del Juego (GDD) — visión, mecánicas, modos, personajes, campos. |
 | [`docs/VITILLA_RESEARCH.md`](docs/VITILLA_RESEARCH.md) | Investigación de la vitilla real (reglas, diana de strike, por qué "baila"). |
 | [`docs/MARIO_SUPERSTAR_BASEBALL.md`](docs/MARIO_SUPERSTAR_BASEBALL.md) | Referencia: cómo funciona *Mario Superstar Baseball* y cómo lo adaptamos. |
+| [`docs/reference/BASEBALL_CLASH_ANALYSIS.md`](docs/reference/BASEBALL_CLASH_ANALYSIS.md) | Referencia principal de estructura: análisis de *Baseball Clash* mapeado a vitilla. |
 | [`docs/TECH_STACK.md`](docs/TECH_STACK.md) | Análisis de tecnología cross-platform (iOS + Android) para el prototipo. |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Hoja de ruta y próximos pasos. |
 | [`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) | Decisiones pendientes (balance, derechos de autor, monetización). |

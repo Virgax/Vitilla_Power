@@ -1,0 +1,30 @@
+# Binarios grandes / apps de referencia — NO subir al repo (usar almacenamiento externo)
+# GitHub rechaza archivos >100MB; el APK/OBB de referencia pesa ~600MB.
+*.apk
+*.aab
+*.obb
+*.xapk
+*.apkm
+*.ipa
+reference-app/
+apk/
+obb/
+
+# Archivos comprimidos grandes de referencia
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+
+# Node / builds
+node_modules/
+dist/
+build/
+.DS_Store
+
+# Temporales
+*.log
+*.tmp
+.cache/
